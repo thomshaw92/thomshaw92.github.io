@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Thomas B. Shaw - Academic Profile</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            line-height: 1.2;
+            padding: 0;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        #sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100%;
+            z-index: 1000; /* Increased z-index */
+            background-color: #decbe4; /* Removed opacity */
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        #sidebar header {
+            background-color: #b3cde3;
+            border-radius: 25px; /* Increased rounded corners */
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        
+        #sidebar header h1 {
+            font-size: 16px; /* Increased font size */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        #sidebar h1 {
+            margin-bottom: 0.5em;
+        }
+        
+        #sidebar p {
+            font-size: 14px; /* Reduced font size for the paragraphs (affiliations) */
+            margin-bottom: 10px; /* Adds space below each paragraph */
+        }
+        
+        #sidebar nav ul {
+            padding: 0; /* Removes padding */
+        }
+        
+        #sidebar nav ul li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 10px;
+            font-size: 16px; /* Smaller font size for navigation links */
+            transition: background-color 0.3s, transform 0.3s, font-size 0.3s;
+            border-radius: 5px; /* Rounded corners for the links */
+            margin: 5px 0; /* Space between items */
+        }
+        
+        #sidebar nav ul li a:hover {
+            background-color: #fbb4ae;
+            color: #fff;
+            transform: scale(1.05); /* Subtle scale on hover */
+            font-size: 18px; /* Slightly larger font size on hover */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow effect for bubble */
+        }        
+        /* Global hyperlink styles */
+        a {
+            color: #fbb4ae; /* Soft pink */
+            text-decoration: none;
+        }
+                a:hover {
+                    text-decoration: underline; /* Adds underline on hover */
+                }
+                #sidebar a, .content a, footer a {
+                    color: #fbb4ae; /* Soft pink for links in sidebar, content, and footer */
+                }
+                #sidebar a:hover, .content a:hover, footer a:hover {
+                    color: #b3cde3; /* Different color on hover */
+                }              
+        .content {
+            position: relative;
+            margin-left: 250px;
+            padding: 20px;
+            transition: opacity 0.5s, z-index 0s 0.5s;
+            opacity: 1;
+            z-index: 1;
+            cursor: pointer;
+        }
+        .content.active {
+            opacity: 1;
+            z-index: 2 ;
+        }
+        header {
+            background-color: #b3cde3;
+            color: #fff;
+            padding: 10px 0;
+        }
+        header img {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 10px 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+        .container {
+            padding: 20px;
+        }
+        section {
+            background-color: #fff;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: #ccebc5;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            margin-left: 250px;
+        }
+        #publications li strong {
+            font-weight: 900; 
+        }
+        #publications li p {
+            font-size: 14px; 
+        }
+        #publications li em {
+            font-size: 12px; 
+            display: block; 
+        }
+        .supervision-entry {
+            margin-bottom: 20px;
+        }
+        
+        .supervision-entry h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .supervision-entry p {
+            margin-bottom: 5px;
+        }        
+        .read-more-button {
+            background-color: #fbb4ae; /* Soft pink color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px; /* Rounded edges */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effect */
+        }
+    
+        .read-more-button:hover {
+            background-color: #e99a96; /* A slightly darker pink for hover effect */
+            transform: scale(1.05); /* Slightly increase size on hover */
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .content {
+                margin-left: 0;
+            }
+            footer {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <header>
+            <img src="images/tom_cropped_square.png" alt="Dr. Thomas B. Shaw" style="width: 180px; height: 180px; object-fit: cover;">            <p>Bill Gole Fellow – Motor Neurone Disease Research, University of Queensland, UQ</p>
+            <p>Research Fellow - School of Electrical Engineering and Computer Science, UQ</p>
+            <p>Affiliated Fellow - The Centre for Advanced Imaging, UQ</p>
+            <p>Honorary Research Fellow - The Royal Brisbane and Women's Hospital</p>
+            <p><strong>Links</strong></p>
+            <p>ORCID: <a href="https://orcid.org/0000-0003-2490-0532" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">0000-0003-2490-0532</a></p>
+            <p>Scopus ID: <a href="https://www.scopus.com/authid/detail.uri?authorId=57201023921" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">57201023921</a></p>
+            <p>Website: <a href="https://researchers.uq.edu.au/researcher/30967" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">researchers.uq.edu.au</a></p>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#biography" class="nav-link">Biography</a></li>
+                <li><a href="#publications" class="nav-link">Publications</a></li>
+                <li><a href="#research" class="nav-link">Research</a></li>
+                <li><a href="#conference_abstracts" class="nav-link">Conference Abstracts</a></li>
+                <li><a href="#code_datasets" class="nav-link">Software, Code & Datasets</a></li>
+                <li><a href="#grants" class="nav-link">Grants & Fellowships</a></li>
+                <li><a href="#supervision" class="nav-link">Supervision</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <section id="biography" class="content">
+            <h2>About me</h2>
+            <p>Welcome to my academic profile. My name is Thomas Shaw, currently serving as the 2020 Bill Gole Fellow at the School of Electrical Engineering and Computer Science, University of Queensland. My research focuses on exploring the heterogeneity of MND subtypes through advanced imaging techniques (MRI).</p>
+                <h2>Academic Background</h2>
+                <ul>
+                    <li><strong>2017-2020:</strong> PhD, The University of Queensland; Neuroscience and Medical Imaging</li>
+                    <li><strong>2015-2016:</strong> Master of Neuroscience (Advanced), Australian National University</li>
+                    <li><strong>2010-2014:</strong> Bachelor of Psychological Science (Honours), The University of Queensland</li>
+                </ul>
+            
+                <h2>Present and Past Employment</h2>
+                <ul>
+                    <li><strong>2024+:</strong> Research Fellow/Honorary Research Fellow, UQ/RBWH</li>
+                    <li><strong>2021-2024:</strong> MND Research Australia Bill Gole Research Fellow, UQ and RBWH</li>
+                    <li><strong>2020-2021:</strong> Postdoctoral Research Fellow, Centre for Advanced Imaging, UQ</li>
+                    <li><strong>2017-2019:</strong> Research Assistant, Queensland Brain Institute, UQ</li>
+                </ul>
+            
+                <h2>Career Summary</h2>
+                <p>
+                    I completed my PhD in Neuroscience and Medical Imaging at The University of Queensland in 2020, where I used multi-contrast MRI to characterise brain tissue in MND using sophisticated image-processing techniques. 
+                    During this time, I was responsible for scanning and analysing data for over 300 participants and I was trained as an MR operator.
+                    My research has included MR methods for determining the myelin content of brain regions, robust and reproducible image processing algorithms for characterising MRI data, and data processing pipelines for the analysis of heterogeneous brain morphometry. 
+                </p>
+                <p>
+                    I have used computational techniques in several imaging modalities including structural and quantitative MR, DWI fMRI, and spectroscopy. 
+                </p>
+                <p>
+                    I was awarded the prestigious Bill Gole Postdoctoral Fellowship for Motor Neuron Research Australia in April 2021. In this 3-year fellowship, I explored the heterogeneity of MND subtypes
+                    by first developing and implementing spinal cord imaging techniques at UQ and combining these with deep clinical and neuropsychological phenotyping.
+                </p>
+        </section>
+        <section id="publications" class="content">
+            <h2>Publications</h2>
+            <p>My work has been published in various high-impact journals, contributing to the understanding of Motor Neurone Disease and computational methods for MR Imaging.</p>
+            <div id="publications-preview">
+                <ul>
+                    <li>
+                        <p><strong>More highly myelinated white matter tracts are associated with faster processing speed in healthy adults</strong><br>
+                        Sidhant Chopra, Marnie Shaw, Thomas Shaw, Perminder S. Sachdev, Kaarin J. Anstey, Nicolas Cherbuin<br>
+                        <em>NeuroImage, 2018</em></p>
+                        <a href="publications/chopra-2017.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.neuroimage.2017.12.069" target="_blank">DOI</a>
+                    </li>
+                </ul>
+            </div>
+            <button onclick="togglePublications()" class="read-more-button">Read more</button>
+            <div id="full-publications-list" style="display: none;">
+                <ul>
+                    <!-- Full publications list -->
+                    <li>
+                        <p><strong>The efficacy of transcranial direct current stimulation to prefrontal areas is related to underlying cortical morphology</strong><br>
+                        Hannah L. Filmer, Shane E. Ehrhardt, Thomas B. Shaw, Jason B. Mattingley, Paul E. Dux<br>
+                        <em>NeuroImage, Date Not Specified</em></p>
+                        <a href="publications/NeuroImage_ID_cortical_structure_ms_R2_Submit_CLEAN.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.neuroimage.2019.04.026" target="_blank">DOI</a>
+                    </li>
+                    <!-- Additional publication entries here -->
+                    <li>
+                        <p><strong>Non-linear realignment improves hippocampus subfield segmentation reliability</strong><br>
+                        Thomas B. Shaw, Steffen Bollmann, Nicole T. Atcheson, Lachlan T. Strike, Christine Guo, Katie L. McMahon, Jurgen Fripp, Margaret J. Wright, Olivier Salvado, Markus Barth<br>
+                        <em>NeuroImage, 2019</em></p>
+                        <a href="publications/non-linear-shaw.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.neuroimage.2019.116206" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Dissociable effects of tDCS polarity on latent decision processes are associated with individual differences in neurochemical concentrations and cortical morphology</strong><br>
+                        Hannah L. Filmer, Timothy Ballard, Shane E. Ehrhardt, Saskia Bollmann, Thomas B. Shaw, Jason B. Mattingley, Paul E. Dux<br>
+                        <em>Neuropsychologia, 2020</em></p>
+                        <a href="publications/dissociable-effects-neuroimage.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.neuropsychologia.2020.107433" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Longitudinal Automatic Segmentation of Hippocampal Subfields (LASHiS) using multi-contrast MRI</strong><br>
+                        Thomas Shaw, Ashley York, Maryam Ziaei, Markus Barth, Steffen Bollmann<br>
+                        <em>NeuroImage, 2020</em></p>
+                        <a href="publications/lashis-shaw.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.neuroimage.2020.116798" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Towards Optimising MRI Characterisation of Tissue (TOMCAT) Dataset including all Longitudinal Automatic Segmentation of Hippocampal Subfields (LASHiS) data</strong><br>
+                        Thomas B. Shaw, Ashley York, Markus Barth, Steffen Bollmann<br>
+                        <em>Data in Brief, 2020</em></p>
+                        <a href="publications/tomcat.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.dib.2020.106043" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Brainhack: Developing a culture of open, inclusive, community-driven neuroscience</strong><br>
+                        Rémi Gau, Stephanie Noble, Katja Heuer, Katherine L. Bottenhorn, Isil P. Bilgin, Yu-Fang Yang, Julia M. Huntenburg, Johanna M.M. Bayer, Richard A.I. Bethlehem, Shawn A. Rhoads, Christoph Vogelbacher, Valentina Borghesani, Elizabeth Levitis, Hao-Ting Wang, Sofie Van Den Bossche, Xenia Kobeleva, Jon Haitz Legarreta, Samuel Guay, Selim Melvin Atay, Gael P. Varoquaux, Dorien C. Huijser, Malin S. Sandström, Peer Herholz, Samuel A. Nastase, AmanPreet Badhwar, Guillaume Dumas, Simon Schwab, Stefano Moia, Michael Dayan, Yasmine Bassil, Paula P. Brooks, Matteo Mancini, James M. Shine, David O’Connor, Xihe Xie, Davide Poggiali, Patrick Friedrich, and many others<br>
+                        <em>Neuron, June 2, 2021</em></p>
+                        <a href="publications/BrainHack-Neuron.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.neuron.2021.04.001" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Centering inclusivity in the design of online conferences—An OHBM–Open Science perspective</strong><br>
+                        Elizabeth Levitis, Cassandra D. Gould van Praag, Remi Gau, Stephan Heunis, Elizabeth Du Pre, Gregory Kiar, Katherine L. Bottenhorn, Tristan Glatard, Aki Nikolaidis, Kirstie Jane Whitaker, Matteo Mancini, Guiomar Niso, Soroosh Afyouni, Eva Alonso-Ortiz, Stefan Appelhoff, Aurina Arnatkeviciute, Selim Melvin Atay, Tibor Auer, Giulia Baracchini, Johanna M. M. Bayer, Michael J.S. Beauvais, Janine D. Bijsterbosch, Isil P. Bilgin, Saskia Bollmann, Steffen Bollmann, Rotem Botvinik-Nezer, Molly G. Bright, Vince D. Calhoun, Xiao Chen, Sidhant Chopra, Hu Chuan-Peng, Thomas G. Close, Savannah L. Cookson, R. Cameron Craddock, Alejandro De La Vega, Benjamin De Leener, Damion V. Demeter, Paola Di Maio, Erin W. Dickie, Simon B. Eickhoff, Oscar Esteban, Karolina Finc, Matteo Frigo, Saampras Ganesan, Melanie Ganz, Kelly G. Garner, Eduardo A. Garza-Villarreal, Gabriel Gonzalez-Escamilla, Rohit Goswami, John D. Griffiths, Tijl Grootswagers, Samuel Guay, Olivia Guest, Daniel A. Handwerker, Peer Herholz, Katja Heuer, Dorien C. Huijser, Vittorio Iacovella, Michael J.E. Joseph, Agah Karakuzu, David B. Keator, Xenia Kobeleva, Manoj Kumar, Angela R. Laird, Linda J. Larson-Prior, Alexandra Lautarescu, Alberto Lazari, Jon Haitz Legarreta, Xue-Ying Li, Jinglei Lv, Sina Mansour L., David Meunier, et al.<br>
+                        <em>GigaScience, 2021</em></p>
+                        <a href="publications/giga-brainhack.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1093/gigascience/giab051" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Enhanced semantic memory in a case of highly superior autobiographical memory</strong><br>
+                        Lucy Ford, Thomas B. Shaw, Jason B. Mattingley, Gail A. Robinson<br>
+                        <em>Cortex, 2022</em></p>
+                        <a href="publications/Semantic_memory_HSAM_Final.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.cortex.2022.02.007" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Open-Source Hypothalamic-ForniX (OSHy-X) Atlases and Segmentation Tool for 3T and 7T</strong><br>
+                        Jeryn Chang, Frederik Steyn, Shyuan Ngo, Robert Henderson, Christine Guo, Steffen Bollmann, Jurgen Fripp, Markus Barth, Thomas Shaw<br>
+                        <em>Journal of Open Source Software, April 2022</em></p>
+                        <a href="publications/joss.chang.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.21105/joss.04368" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Lower Hypothalamic Volume with Lower BMI is Associated with Shorter Survival in Patients with ALS</strong><br>
+                        Jeryn Chang, Thomas Shaw, Cory Holdom, F. J. Steyn, et al.<br>
+                        <em>European Journal of Neurology, October 2022</em></p>
+                        <a href="publications/Euro_J_of_Neurology_2022_Chang.pdf" target="_blank">Download PDF</a> |
+                        a href="https://doi.org/10.1111/ene.15589" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>A (Sub)field Guide to Quality Control in Hippocampal Subfield Segmentation on High-resolution T2-weighted MRI</strong><br>
+                        K.L. Canada, N. Mazloum-Farzaghi, G. Rådman, J.N. Adams, A. Bakker, H. Baumeister, D. Berron, M. Bocchetta, V. Carr, M.A. Dalton, R. de Flores, A. Keresztes, R. La Joie, S.G. Mueller, N. Raz, T. Santini, T. Shaw, C.E.L. Stark, T.T. Tran, L. Wang, L.E.M. Wisse, A. Wuestefeld, P.A. Yushkevich, R.K. Olsen, A.M. Daugherty, et al.<br>
+                        <em>bioRxiv, December 1, 2023</em></p>
+                        <a href="publications/subfield-guide.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1101/2023.11.29.568895" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>Proceedings of the OHBM Brainhack 2021</strong><br>
+                        Aki Nikolaidis, Matteo Mancini, Tibor Auer, Katherine L. Bottenhorn, Eva Alonso-Ortiz, Gabriel Gonzalez-Escamilla, Sofie Valk, Tristan Glatard, Melvin Selim Atay, Johanna M.M. Bayer, Janine Bijsterbosch, Johannes Algermissen, Natacha Beck, Patrick Bermudez, Isil Poyraz Bilgin, Steffen Bollmann, Claire Bradley, Megan E.J. Campbell, Bryan Caron, Oren Civier, Luis Pedro Coelho, Shady El Damaty, Samir Das, Mathieu Dugré, Eric Earl, Stefanie Evas, Nastassja Lopes Fischer, De Fu Yap, Kelly G. Garner, Remi Gau, Giorgio Ganis, Dylan G. E. Gomes, Martin Grignard, Samuel Guay, Omer Faruk Gulban, Sarah Hamburg, Yaroslav O. Halchenko, Valerie Hayot-Sasson, Dawn Liu Holford, Laurentius Huber, Manuel Illanes, Tom Johnstone, Avinash Kalyani, Kinshuk Kashyap, Ibrahim Khormi, Gregory Kiar, Vanja Kovic, Tristan Kuehn, Achintya Kumar, Xavier Lecours-Boucher, Michael Lührs, Robert Luke, Cecile Madjar, Sina Mansour L., Chris Markeweicz, Paula Andrea Martinez, Alexandra McCarroll, Léa Michel, Stefano Moia, Aswin Narayanan, Guiomar Niso, Emmet A. O’Brien, Kendra Oudyk, François Paugam, Yuri G. Pavlov, Jean-Baptiste Poline, Benedikt A. Poser, Céline Provins, Pradeep Reddy Raamana, Pierre Rioux, David Romero-Bascones, Ekansh Sareen, Antonio Schettino, Alec Shaw, Thomas Shaw, Cooper A. Smout, Andela Šoškic´, Jessica Stone, Suzy J Styles, Ryan Sullivan, Naoyuki Sunami, Shamala Sundaray, Jasmine Wei Rou, Dao Thanh Thuy, Sebastien Tourbier, Sebastián Urch, Alejandro de la Vega, Niruhan Viswarupan, Adina Wagner, Lennart Walger, Hao-Ting Wang, Fei Ting Woon, David White, Christopher Wiggins, Will Woods, Yu-Fang Yang, Ksenia Zaytseva, Judy D. Zhu, Marcel P. Zwiers<br>
+                        <em>Aperture Neuro, March 2023</em></p>
+                        <a href="publications/77464-proceedings-of-the-ohbm-brainhack-2021.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1016/j.dib.2023.108206" target="_blank">DOI</a>
+                    </li>                                                                                                                
+                    <li>
+                        <p><strong>Individual differences in decision strategy relate to neurochemical excitability and cortical thickness</strong><br>
+                        Hannah L. Filmer, Kathleen Loughnan, Jennifer X. Seeto, Timothy Ballard, Shane E. Ehrhardt, Thomas Shaw, Yohan Wards, Reuben Rideaux, Li-Ann Leow, David Sewell, Paul E. Dux<br>
+                        <em>The Journal of Neuroscience, 2023</em></p>
+                        <a href="publications/individ-diff-filmer.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1523/JNEUROSCI.1086-23.2023" target="_blank">DOI</a>
+                    </li>
+                    <li>
+                        <p><strong>HumanBrainAtlas: an in vivo MRI dataset for detailed segmentations</strong><br>
+                        Mark M. Schira, Zoey J. Isherwood, Mustafa S. Kassem, Markus Barth, Thomas B. Shaw, Michelle M. Roberts, George Paxinos<br>
+                        <em>Brain Structure and Function, 2023</em></p>
+                        <a href="publications/s00429-023-02653-8.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1007/s00429-023-02653-8" target="_blank">DOI</a>
+                    </li>            
+                    <li>
+                        <p><strong>Neurodesk: an accessible, flexible and portable data analysis environment for reproducible neuroimaging</strong><br>
+                        Angela I. Renton, Thuy T. Dao, Tom Johnstone, Oren Civier, Ryan P. Sullivan, David J. White, Paris Lyons, Benjamin M. Slade, David F. Abbott, Toluwani J. Amos, Saskia Bollmann, Andy Botting, Megan E. J. Campbell, Jeryn Chang, Thomas G. Close, Monika Dörig, Korbinian Eckstein, Gary F. Egan, Stefanie Evas, Guillaume Flandin, Kelly G. Garner, Marta I. Garrido, Satrajit S. Ghosh, Martin Grignard, Yaroslav O. Halchenko, Anthony J. Hannan, Anibal S. Heinsfeld, Laurentius Huber, Matthew E. Hughes, Jakub R. Kaczmarzyk, Lars Kasper, Levin Kuhlmann, Kexin Lou, Yorguin-Jose Mantilla-Ramos, Jason B. Mattingley, Michael L. Meier, Jo Morris, Akshaiy Narayanan, Franco Pestilli, Aina Puce, Fernanda L. Ribeiro, Nigel C. Rogasch, Chris Rorden, Mark M. Schira, Thomas B. Shaw, Paul F. Sowman, Gershon Spitz, Ashley W. Stewart, Xincheng Ye, Judy D. Zhu, Aswin Narayanan, Steffen Bollmann<br>
+                        <em>Nature Methods, Published online 2023</em></p>
+                        <a href="publications/neurodesk.pdf" target="_blank">Download PDF</a> |
+                        <a href="https://doi.org/10.1038/s41592-023-02145-x" target="_blank">DOI</a>
+                    </li>
+                </ul> 
+            </div>
+        </section>            
+        <section id="research" class="content">
+            <h2>Research Projects</h2>
+            <p></p>
+            <ul>
+                <li>
+                    <strong>Motor Neurone Disease (MND) Research</strong>
+                    <p>Investigating the heterogeneity of MND subtypes using MR imaging techniques including MR Spectroscopy.</p>
+                </li>
+                <li>
+                    <strong>Spinal Cord Imaging</strong>
+                    <p>Developing and implementing spinal cord imaging techniques for MND research.</p>
+                </li>
+                <li>
+                    <strong>Image Processing for MR </strong>
+                    <p>Developing robust and reproducible image processing algorithms for MRI data.</p>
+                </li>
+                <li>
+                    <strong>Geometric Deep learning for MND</strong>
+                    <p>Developing GDL for understanding cortical folding patterns affect disease progression in MND</p>
+                </li>
+                <li>
+                    <strong>Harmonising MR data (QSM)</strong>
+                    <p>Using Deep learning to harmomnise Quantitative Susceptibility Maps of patients with MND from different datasets</p>
+                </li>
+                <li>
+                    <strong>AI-based longitudinal image segmentation for Magnetic Resonance Imaging - A Systematic Review</strong>
+                    <a href="https://osf.io/zn6kg/" target="_blank" rel="noopener noreferrer">View Project</a>
+                </li>
+                <li>
+                    <strong>Non motor aspects of Motor Neurone Disease + Body mapping of patients with MND </strong>
+                    <p>Tracking cortical plasticity in patients with MND</p>
+                </li>
+                
+            
+        </section>
+        <section id="conference_abstracts" class="content">
+            <h2>Conference Abstracts</h2>
+            <ul>
+                <li>
+                    <strong>Mapping Cortical Metabolites using Multi-Voxel Magnetic Resonance Spectroscopy</strong>
+                    <p>Presented at the Organisation for Human Brain Mapping, 2024</p>
+                    <a href="posters_presentations_abstracts/OHBM-final-MRSI-repro.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                </li>
+                <li>
+                    <strong>Spinal cord MRI predictive of disease progression and subtypes in Motor Neurone Disease</strong>
+                    <p>Presented at the Organisation for Human Brain Mapping, 2023</p>
+                    <a href="posters_presentations_abstracts/2023_OHBM_final_previewpdf_spinalcord.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                </li>
+                <li>
+                    <strong>Short-TE semi-LASER 1H MRS of the primary motor cortex in ALS and controls at 7 Tesla</strong>
+                    <p>Presented at the International Society for Magnetic Resonance in Medicine, 2023</p>
+                    <a href="posters_presentations_abstracts/Zeinab-ISMRM-2023-SVS.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                </li>
+                <li>
+                    <strong>Spinal Cord MRI is predictive of MND Subtype and Disease Progression</strong>
+                    <p>Presented at the Pan-Asian Consortium for Treatment and Research in ALS (PACTALS), 2023</p>
+                    <a href="posters_presentations_abstracts/PACTALS_speech-2023-TBS.mp4" target="_blank" rel="noopener noreferrer">View Video</a>
+                </li>
+                <li>
+                    <strong>Containers for Science</strong>
+                    <p>Presented at the OHBM Brainhack 2020/2021</p>
+                    <a href="posters_presentations_abstracts/ContainersForScience_pdfversion_small.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                </li>
+                <li>
+                    <strong>A population-specific framework for the morphological analysis of Motor Neuron Disease using ultra-high field MRI</strong>
+                    <p>Presented at the International Society for Magnetic Resonance in Medicine, 2020</p>
+                    <a href="posters_presentations_abstracts/ISMRM_Template-based-hippocampus_2019.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                </li>
+                <li>
+                    <strong>Automatic Longitudinal Assessment of Hippocampal Subfields using Multi-Contrast MRI</strong>
+                    <p>Presented at the International Society for Magnetic Resonance in Medicine, 2020</p>
+                    <a href="posters_presentations_abstracts/LASHiS-2019-ISMRM.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                </li>
+                <li>
+                    <strong>Hippocampus subfield segmentation reliability is improved by non-linear realignments between scan-repetitions at 7T and 3T</strong>
+                    <p>Presented at the International Society for Magnetic Resonance in Medicine, 2020</p>
+                    <a href="posters_presentations_abstracts/nonlinmoco-hippocampus-2019-ISMRM.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                </li>
+            </ul>
+        </section>
+        <section id="code_datasets" class="content">
+            <h2>Software, Code, and Datasets</h2>
+            <ul>
+                <li>
+                    <strong>LASHiS Code for Automatic Segmentation of Hippocampal Subfields:</strong>
+                    <p>Details about the LASHiS code and how it aids in the segmentation of hippocampal subfields.</p>
+                    <a href="https://github.com/thomshaw92/LASHiS" target="_blank">Access LASHiS Code</a> 
+                </li>
+                <li>
+                    <strong>GitHub Profile:</strong>
+                    <p>Explore my repositories and follow my contributions to various projects on GitHub.</p>
+                    <a href="https://github.com/thomshaw92" target="_blank">Visit GitHub Profile</a>
+                </li>
+                <li>
+                    <strong>Neurodesk Contributions:</strong>
+                    <p>A collaborative effort to provide a versatile and robust platform for neuroimaging analysis. Find out more about my role in this project.</p>
+                    <a href="https://www.neurodesk.org/developers/contributors/" target="_blank">Neurodesk Contributors</a>
+                </li>
+            </ul>
+        </section>        
+        <section id="grants" class="content">
+            <h2>Grants and Fellowships</h2>
+            <p>Major funding support received:</p>
+            <table>
+                <tr>
+                    <th>Year</th>
+                    <th>Funding Agency/Grant Name</th>
+                    <th>Project Title</th>
+                    <th>Contribution</th>
+                </tr>
+                <tr>
+                    <td>2021-2023</td>
+                    <td>MNDRA Bill Gole Postdoctoral MND Research Fellowship</td>
+                    <td>Ultra-High Field spinal cord imaging of MND</td>
+                    <td>Principal Investigator</td>
+                </tr>
+                <tr>
+                    <td>2022-2022</td>
+                    <td>UQ Engineering, Architecture, and Info Tech. - Health and Behavioural Sciences Early Career Researcher Grant</td>
+                    <td>Exploring the body map in MND</td>
+                    <td>Principal Investigator</td>
+                </tr>
+                <tr>
+                    <td>2023-2023</td>
+                    <td>UQ Engineering, Architecture, and Info Tech. philanthropic grant</td>
+                    <td>Methods for alleviating symptoms of MND using brain stimulation</td>
+                    <td>Principal Investigator</td>
+                </tr>
+                <tr>
+                    <td>2023-2026</td>
+                    <td>FightMND collaborative grant</td>
+                    <td>Asia Pacific MND NeuroImaging Initiative (AMII)</td>
+                    <td>Co-Investigator</td>
+                </tr>
+                <tr>
+                    <td>2024-2027</td>
+                    <td>NHMRC Ideas Grant</td>
+                    <td>Defining Metabolic Dysfunction in Amyotrophic Lateral Sclerosis</td>
+                    <td>Associate Investigator</td>
+                </tr>
+            </table>
+        </section>  
+        <section id="supervision" class="content">
+            <h2>Supervision</h2>
+            <div class="supervision-entry">
+                <h3>Use of bioinformatics to decode disease heterogeneity in motor neuron disease</h3>
+                <p><strong>Role:</strong> Associate Advisor</p>
+                <p><strong>Doctoral Candidate:</strong> Jeryn Chang </p>
+                <p><strong>Other Advisors:</strong> Associate Professor Shyuan Ngo, Associate Professor Frederik Steyn, Associate Professor Robert Henderson</p>
+            </div>
+            <div class="supervision-entry">
+                <h3>Magnetic Resonance Spectroscopy in Patients with Motor Neuron Disease at 3T and 7T</h3>
+                <p><strong>Role:</strong> Associate Advisor</p>
+                <p><strong>Doctoral Candidate:</strong> Zeinab Eftekhari</p>
+                <p><strong>Other Advisors:</strong> Professor Markus Barth</p>
+            </div>        
+        </section>      
+    </div>
+    <footer>
+        <p>© Dr. Thomas B. Shaw | University of Queensland | Email: 
+            <script>
+                var user = 't.shaw';
+                var domain = 'uq.edu.au';
+                document.write('<a href="mailto:' + user + '@' + domain + '">' + user + '@' + domain + '</a>');
+            </script>
+        </p>
+    </footer>    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.content');
+        
+            const updateVisibility = (target, isVisible) => {
+                sections.forEach(section => {
+                    if (isVisible && section === target) {
+                        section.style.opacity = '1';
+                        section.classList.add('active');
+                    } else {
+                        section.style.opacity = '1'; /* Changed to ensure all sections are readable */
+                        section.classList.remove('active');
+                    }
+                });
+            };
+        
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    const targetSection = document.querySelector(href);
+                    updateVisibility(targetSection, true);
+                    window.scrollTo({
+                        top: targetSection.offsetTop,
+                        behavior: 'smooth'
+                    });
+                    e.preventDefault();
+                });
+            });
+        
+            sections.forEach(section => {
+                section.addEventListener('click', () => updateVisibility(section, true));
+            });
+        
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    updateVisibility(entry.target, entry.isIntersecting);
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.5 /* Adjusted threshold for better visibility */
+            });
+        
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        
+            window.togglePublications = function() {
+                var fullList = document.getElementById('full-publications-list');
+                fullList.style.display = (fullList.style.display === 'none' || fullList.style.display === '') ? 'block' : 'none';
+            };
+        });
+    </script>         
+</body>
+</html>
