@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software &mdash; Dr Thomas B. Shaw</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Dr Thomas B. Shaw</a>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="this.nextElementSibling.classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="grants.html">Grants</a></li>
+      <li><a href="software.html" class="active">Software</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Software, Code &amp; Datasets</h1>
+  <p>Open-science tools for reproducible neuroimaging</p>
+</div>
+
+<main>
+
+  <section>
+    <h2>Tools &amp; Software</h2>
+
+    <div class="card software-card">
+      <div class="software-icon">&#129504;</div>
+      <div>
+        <h3>LASHiS &mdash; Longitudinal Automatic Segmentation of Hippocampal Subfields</h3>
+        <p>A multi-contrast MRI pipeline for the longitudinal automatic segmentation of hippocampal subfields. Uses ANTs-based registration and multi-contrast input to improve segmentation reliability across timepoints, particularly at ultra-high field.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Python</span>
+          <span class="tag">ANTs</span>
+          <span class="tag">7T MRI</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="https://github.com/thomshaw92/LASHiS" target="_blank">GitHub</a> &middot;
+          <a href="publications/Shaw-2020-LASHiS-HippocampalSubfields-NeuroImage.pdf" target="_blank">Paper (NeuroImage 2020)</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card software-card">
+      <div class="software-icon">&#129516;</div>
+      <div>
+        <h3>TongueSegMRI &mdash; Tongue Musculature Segmentation</h3>
+        <p>A field guide and validation framework for segmenting the human tongue musculature from MRI, developed and validated in a cohort of people living with Motor Neuron Disease. Includes multi-site, multi-contrast annotated datasets.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Python</span>
+          <span class="tag">Segmentation</span>
+          <span class="tag green">MND</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="https://github.com/thomshaw92" target="_blank">GitHub</a> &middot;
+          <a href="publications/Shaw-2025-TongueMusculatureMRI-MND-CIBM.pdf" target="_blank">Paper (CIBM 2025)</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card software-card">
+      <div class="software-icon">&#128200;</div>
+      <div>
+        <h3>Neurodesk &mdash; Reproducible Neuroimaging Environment</h3>
+        <p>An accessible, flexible and portable data analysis environment for reproducible neuroimaging. Packages hundreds of neuroimaging tools into containers, enabling consistent analysis across platforms and institutions worldwide.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Containers</span>
+          <span class="tag">Open Science</span>
+          <span class="tag lavender">Nature Methods</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="https://www.neurodesk.org" target="_blank">neurodesk.org</a> &middot;
+          <a href="https://www.neurodesk.org/developers/contributors/" target="_blank">Contributors</a> &middot;
+          <a href="publications/Renton-2024-Neurodesk-ReproducibleNeuroimaging-NatureMethods.pdf" target="_blank">Paper (Nature Methods 2024)</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card software-card">
+      <div class="software-icon">&#129516;</div>
+      <div>
+        <h3>VesselBoost &mdash; Blood Vessel Segmentation</h3>
+        <p>A Python toolbox for small blood vessel segmentation in human MR angiography data. Uses deep learning to improve vessel detection in high-resolution MRI datasets.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Python</span>
+          <span class="tag">Deep Learning</span>
+          <span class="tag">MR Angiography</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="https://github.com/KMarshallX/VesselBoost" target="_blank">GitHub</a> &middot;
+          <a href="publications/Xu-2024-VesselBoost-BloodVesselSegmentation-ApertureNeuro.pdf" target="_blank">Paper (Aperture Neuro 2024)</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card software-card">
+      <div class="software-icon">&#129504;</div>
+      <div>
+        <h3>OSHy-X &mdash; Hypothalamic-ForniX Atlas &amp; Segmentation</h3>
+        <p>Open-source atlases and segmentation tool for the hypothalamus and fornix at 3T and 7T. Enables automated segmentation of subcortical structures relevant to MND and metabolic research.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Python</span>
+          <span class="tag">JOSS</span>
+          <span class="tag green">MND</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="https://github.com/Cadaei-Yuvxvs/OSHy-X" target="_blank">GitHub</a> &middot;
+          <a href="publications/Chang-2022-OSHyX-HypothalamicAtlas-JOSS.pdf" target="_blank">Paper (JOSS 2022)</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card software-card">
+      <div class="software-icon">&#127993;</div>
+      <div>
+        <h3>BodyLocaliser &mdash; fMRI Body Localiser Task</h3>
+        <p>A body localiser experiment for fMRI built using PsychoPy. Designed for mapping somatotopic representations of the body in the motor cortex, supporting MND research into cortical body mapping.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Python</span>
+          <span class="tag">PsychoPy</span>
+          <span class="tag green">fMRI</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="https://github.com/thomshaw92/BodyLocaliser" target="_blank">GitHub</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card software-card">
+      <div class="software-icon">&#127916;</div>
+      <div>
+        <h3>DICOM2Vid &mdash; DICOM to Video Converter</h3>
+        <p>A lightweight tool to convert DICOM image folders into video files, useful for sharing MRI data with participants and clinical staff in an accessible format.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Python</span>
+          <span class="tag">DICOM</span>
+          <span class="tag">Utility</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="https://github.com/thomshaw92/DICOM2Vid" target="_blank">GitHub</a>
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <section>
+    <h2>Datasets</h2>
+
+    <div class="card">
+      <h3>TOMCAT Dataset</h3>
+      <p>Towards Optimising MRI Characterisation of Tissue &mdash; a comprehensive dataset including all LASHiS longitudinal hippocampal subfield segmentation data. Openly available for use by the research community.</p>
+      <p style="margin-top: 0.5rem;"><a href="publications/Shaw-2020-TOMCAT-LASHiS-Dataset-DataInBrief.pdf" target="_blank">Data in Brief (2020)</a></p>
+    </div>
+
+    <div class="card">
+      <h3>Multi-site Tongue MRI Dataset</h3>
+      <p>An annotated multi-site and multi-contrast MRI dataset for the study of the human tongue musculature, collected across multiple Australian centres and shared openly via Scientific Data.</p>
+      <p style="margin-top: 0.5rem;"><a href="https://doi.org/10.1038/s41597-025-05092-8" target="_blank">Scientific Data (2025)</a></p>
+    </div>
+
+    <div class="card">
+      <h3>MND fMRI Appetite Dataset</h3>
+      <p>An fMRI dataset for appetite neural correlates in people living with Motor Neuron Disease, shared openly to support research into metabolic dysfunction and non-motor symptoms in ALS/MND.</p>
+      <p style="margin-top: 0.5rem;"><a href="https://doi.org/10.1038/s41597-025-04828-w" target="_blank">Scientific Data (2025)</a></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>GitHub</h2>
+    <p>All code and contributions are available on GitHub. <a href="https://github.com/thomshaw92" target="_blank">Visit profile &rarr;</a></p>
+  </section>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 Dr Thomas B. Shaw &middot; University of Queensland &middot;
+    <a href="mailto:t.shaw@uq.edu.au">t.shaw@uq.edu.au</a>
+  </p>
+</footer>
+
+</body>
+</html>
