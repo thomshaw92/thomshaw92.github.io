@@ -13,7 +13,7 @@
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="nav-name">Dr Thomas B. Shaw</a>
-    <button class="nav-toggle" aria-label="Toggle menu" onclick="this.nextElementSibling.classList.toggle('open')">
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links">
@@ -32,6 +32,26 @@
 </div>
 
 <main>
+
+  <section>
+    <h2>Interactive Tools</h2>
+
+    <div class="card software-card">
+      <div class="software-icon">&#129504;</div>
+      <div>
+        <h3>Interactive Glasser Atlas</h3>
+        <p>Explore the HCP-MMP1.0 cortical parcellation (Glasser et al., 2016) on a 3D brain surface. Toggle between folded and inflated views, hover to identify all 180 regions per hemisphere.</p>
+        <div class="tags" style="margin-top:0.5rem;">
+          <span class="tag">Plotly</span>
+          <span class="tag">HCP-MMP1</span>
+          <span class="tag lavender">Interactive</span>
+        </div>
+        <p style="margin-top: 0.75rem;">
+          <a href="glasser_atlas.html">Launch Atlas &rarr;</a>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <section>
     <h2>Tools &amp; Software</h2>
@@ -191,5 +211,6 @@
   </p>
 </footer>
 
+<script src="nav.js"></script>
 </body>
 </html>
