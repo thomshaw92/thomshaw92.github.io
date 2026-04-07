@@ -2,6 +2,17 @@
 Build an interactive 3D Glasser Atlas - LEFT hemisphere only.
 Full fsaverage resolution (163k vertices), no resampling.
 Uses intensity + intensitymode='cell' for correct per-face hover.
+
+Requirements
+------------
+    pip install nilearn mne nibabel plotly scipy
+
+Data download
+-------------
+    On first run this script uses MNE to fetch the fsaverage template brain
+    (~450 MB) from the Open Science Framework (OSF). The files are cached in
+    ~/mne_data/MNE-fsaverage-data/ and are not re-downloaded on subsequent
+    runs.  An internet connection is required for the initial download.
 """
 
 import numpy as np
