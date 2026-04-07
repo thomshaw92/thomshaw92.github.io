@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Glasser Atlas &mdash; Dr Thomas B. Shaw</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+  <style>
+    .atlas-container {
+      background: #161629;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+    .atlas-container .js-plotly-plot {
+      border-radius: 12px;
+    }
+    #atlas-plot {
+      width: 100%;
+      height: 70vh;
+      min-height: 500px;
+    }
+    .atlas-controls {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .atlas-btn {
+      background: #2a2a44;
+      color: #fff;
+      border: 1px solid #4a4a6a;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .atlas-btn:hover { background: #3a3a5a; }
+    .atlas-btn.active { background: var(--color-accent); border-color: var(--color-accent); }
+    .atlas-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #161629;
+      color: #aaa;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      z-index: 20;
+    }
+    .atlas-loading.hidden { display: none; }
+    .atlas-info {
+      color: var(--color-text-muted, #666);
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    /* Override the max-width for the atlas to be wider */
+    .atlas-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Dr Thomas B. Shaw</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="grants.html">Grants</a></li>
+      <li><a href="software.html" class="active">Software</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Interactive Glasser Atlas</h1>
+  <p>HCP-MMP1.0 Cortical Parcellation &mdash; Left Hemisphere</p>
+</div>
+
+<div class="atlas-section">
+  <div class="atlas-container">
+    <div class="atlas-loading" id="loading">Loading atlas data&hellip;</div>
+    <div class="atlas-controls" id="controls" style="display:none;">
+      <button class="atlas-btn active" id="btn-pial" onclick="showPial()">Folded (Pial)</button>
+      <button class="atlas-btn" id="btn-infl" onclick="showInflated()">Inflated</button>
+    </div>
+    <div id="atlas-plot"></div>
+  </div>
+  <p class="atlas-info">Hover to see region names &middot; Click+drag to rotate &middot; Scroll to zoom</p>
+</div>
+
+<main>
+  <section>
+    <h2>About this Atlas</h2>
+    <p>
+      This interactive visualisation shows the HCP-MMP1.0 cortical parcellation
+      (Glasser et al., 2016) mapped onto the left hemisphere of the fsaverage
+      template brain. The atlas divides the cortex into 180 distinct regions per
+      hemisphere based on multi-modal MRI data including cortical architecture,
+      function, connectivity, and topography.
+    </p>
+    <p>
+      Toggle between the <strong>folded (pial)</strong> surface showing the brain's
+      natural gyri and sulci, and the <strong>inflated</strong> surface which reveals
+      regions hidden within sulcal folds. Black boundary lines delineate each
+      parcellation region.
+    </p>
+    <p style="margin-top: 0.75rem;">
+      <a href="https://doi.org/10.1038/nature18933" target="_blank">Glasser et al., 2016 (Nature)</a> &middot;
+      <a href="software.html">&larr; Back to Software</a>
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 Dr Thomas B. Shaw &middot; University of Queensland &middot;
+    <a href="mailto:t.shaw@uq.edu.au">t.shaw@uq.edu.au</a>
+  </p>
+</footer>
+
+<script>
+let atlasData = null;
+let currentView = 'pial';
+
+fetch('atlas_data.json')
+  .then(r => r.json())
+  .then(data => {
+    atlasData = data;
+    // Rebuild hover names from indices
+    atlasData.fh = data.fni.map(i => data.fn[i]);
+    buildPlot('pial');
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('controls').style.display = 'flex';
+  })
+  .catch(err => {
+    document.getElementById('loading').textContent = 'Failed to load atlas data.';
+    console.error(err);
+  });
+
+function buildPlot(view) {
+  const d = atlasData;
+  const isP = view === 'pial';
+  const verts = isP ? d.pv : d.iv;
+  const bnd = isP ? d.pb : d.ib;
+
+  const mesh = {
+    type: 'mesh3d',
+    x: verts[0], y: verts[1], z: verts[2],
+    i: d.f[0], j: d.f[1], k: d.f[2],
+    intensity: d.fi,
+    intensitymode: 'cell',
+    colorscale: d.cs,
+    showscale: false,
+    text: d.fh,
+    hovertemplate: '%{text}<extra></extra>',
+    flatshading: false,
+    lighting: {ambient: 0.8, diffuse: 0.5, specular: 0.05, roughness: 0.8, fresnel: 0},
+    lightposition: {x: 0, y: -300, z: 300},
+  };
+
+  const lines = {
+    type: 'scatter3d',
+    mode: 'lines',
+    x: bnd[0], y: bnd[1], z: bnd[2],
+    line: {color: 'black', width: 3},
+    hoverinfo: 'skip',
+    showlegend: false,
+  };
+
+  const layout = {
+    scene: {
+      xaxis: {visible: false},
+      yaxis: {visible: false},
+      zaxis: {visible: false},
+      bgcolor: '#161629',
+      aspectmode: 'data',
+      camera: {
+        eye: {x: -1.7, y: -0.5, z: 0.3},
+        up: {x: 0, y: 0, z: 1}
+      }
+    },
+    paper_bgcolor: '#161629',
+    plot_bgcolor: '#161629',
+    margin: {l: 0, r: 0, t: 0, b: 0},
+    font: {color: 'white'},
+  };
+
+  const config = {
+    displayModeBar: true,
+    modeBarButtonsToRemove: ['lasso2d', 'select2d'],
+    displaylogo: false,
+    scrollZoom: true,
+  };
+
+  Plotly.newPlot('atlas-plot', [mesh, lines], layout, config);
+}
+
+function showPial() {
+  if (currentView === 'pial') return;
+  currentView = 'pial';
+  document.getElementById('btn-pial').classList.add('active');
+  document.getElementById('btn-infl').classList.remove('active');
+  buildPlot('pial');
+}
+
+function showInflated() {
+  if (currentView === 'inflated') return;
+  currentView = 'inflated';
+  document.getElementById('btn-infl').classList.add('active');
+  document.getElementById('btn-pial').classList.remove('active');
+  buildPlot('inflated');
+}
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>
