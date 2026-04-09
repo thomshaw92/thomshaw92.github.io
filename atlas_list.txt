@@ -1,0 +1,17 @@
+HCPMMP1
+HCPMMP1_combined
+PALS_B12_Brodmann
+PALS_B12_Lobes
+PALS_B12_OrbitoFrontal
+PALS_B12_Visuotopic
+Yeo2011_17Networks_N1000
+Yeo2011_7Networks_N1000
+aparc.a2005s
+aparc.a2009s
+aparc
+aparc_sub
+destrieux
+glasser
+oasis.chubs
+yeo17
+yeo7

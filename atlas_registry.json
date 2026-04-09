@@ -1,0 +1,67 @@
+{
+  "HCPMMP1": {
+    "name": "Glasser Atlas (HCP-MMP1.0)",
+    "description": "HCP-MMP1.0 Parcellation",
+    "citation": "Glasser et al., 2016"
+  },
+  "HCPMMP1_combined": {
+    "name": "Hcpmmp1 Combined",
+    "description": "HCPMMP1_combined atlas",
+    "citation": "Unknown"
+  },
+  "PALS_B12_Brodmann": {
+    "name": "PALS Brodmann Atlas",
+    "description": "PALS Brodmann Areas",
+    "citation": "Van Essen, 2005"
+  },
+  "PALS_B12_Lobes": {
+    "name": "PALS Lobe Atlas",
+    "description": "PALS Lobe Parcellation",
+    "citation": "Van Essen, 2005"
+  },
+  "PALS_B12_OrbitoFrontal": {
+    "name": "Pals B12 Orbitofrontal",
+    "description": "PALS_B12_OrbitoFrontal atlas",
+    "citation": "Unknown"
+  },
+  "PALS_B12_Visuotopic": {
+    "name": "Pals B12 Visuotopic",
+    "description": "PALS_B12_Visuotopic atlas",
+    "citation": "Unknown"
+  },
+  "Yeo2011_17Networks_N1000": {
+    "name": "Yeo 17 Networks",
+    "description": "Yeo 17 Resting-State Networks",
+    "citation": "Yeo et al., 2011"
+  },
+  "Yeo2011_7Networks_N1000": {
+    "name": "Yeo 7 Networks",
+    "description": "Yeo 7 Resting-State Networks",
+    "citation": "Yeo et al., 2011"
+  },
+  "aparc.a2005s": {
+    "name": "Destrieux 2005 Atlas",
+    "description": "Destrieux Atlas (2005)",
+    "citation": "Destrieux et al., 2010"
+  },
+  "aparc.a2009s": {
+    "name": "Destrieux Atlas",
+    "description": "Destrieux Atlas (2009)",
+    "citation": "Destrieux et al., 2010"
+  },
+  "aparc": {
+    "name": "Desikan-Killiany Atlas",
+    "description": "Desikan-Killiany Atlas (2006)",
+    "citation": "Desikan et al., 2006"
+  },
+  "aparc_sub": {
+    "name": "Aparc Sub",
+    "description": "aparc_sub atlas",
+    "citation": "Unknown"
+  },
+  "oasis.chubs": {
+    "name": "OASIS CHUBS Atlas",
+    "description": "OASIS CHUBS Parcellation",
+    "citation": "OASIS"
+  }
+}
