@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Glasser Atlas &mdash; Dr Thomas B. Shaw</title>
-  <meta name="description" content="Interactive Glasser atlas viewer showing the HCP-MMP1.0 cortical parcellation on fsaverage left hemisphere surfaces with folded and inflated views.">
-  <meta name="keywords" content="Glasser atlas, HCP-MMP1.0, HCP MMP1.0, interactive brain atlas, cortical parcellation, fsaverage, inflated cortex, pial surface, neuroimaging, plotly brain atlas">
+  <title>Interactive Brain Atlas &mdash; Dr Thomas B. Shaw</title>
+  <meta name="description" content="Interactive brain atlas viewer showing multiple cortical parcellations on fsaverage left hemisphere surfaces with folded and inflated views.">
+  <meta name="keywords" content="brain atlas, cortical parcellation, Glasser atlas, HCP-MMP1.0, Destrieux atlas, Yeo networks, interactive brain atlas, fsaverage, inflated cortex, pial surface, neuroimaging, plotly brain atlas">
   <meta name="author" content="Dr Thomas B. Shaw">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://thomshaw92.github.io/glasser_atlas.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Interactive Glasser Atlas | Dr Thomas B. Shaw">
-  <meta property="og:description" content="Explore the HCP-MMP1.0 cortical parcellation on fsaverage with interactive folded and inflated left-hemisphere views.">
+  <meta property="og:title" content="Interactive Brain Atlas | Dr Thomas B. Shaw">
+  <meta property="og:description" content="Explore multiple cortical parcellations on fsaverage with interactive folded and inflated left-hemisphere views.">
   <meta property="og:url" content="https://thomshaw92.github.io/glasser_atlas.html">
   <meta property="og:image" content="https://thomshaw92.github.io/images/Thomas_Shaw_2025_cropped.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Interactive Glasser Atlas | Dr Thomas B. Shaw">
-  <meta name="twitter:description" content="Interactive HCP-MMP1.0 Glasser atlas viewer with folded and inflated fsaverage cortical surfaces.">
+  <meta name="twitter:title" content="Interactive Brain Atlas | Dr Thomas B. Shaw">
+  <meta name="twitter:description" content="Interactive brain atlas viewer with multiple parcellations, folded and inflated fsaverage cortical surfaces.">
   <meta name="twitter:image" content="https://thomshaw92.github.io/images/Thomas_Shaw_2025_cropped.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
@@ -59,6 +59,15 @@
       min-height: 500px;
     }
     .atlas-controls {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .atlas-view-controls {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -128,14 +137,22 @@
 </nav>
 
 <div class="page-header">
-  <h1>Interactive Glasser Atlas</h1>
-  <p>HCP-MMP1.0 Cortical Parcellation &mdash; Left Hemisphere</p>
+  <h1>Interactive Brain Atlas</h1>
+  <p>Multiple Cortical Parcellations &mdash; Left Hemisphere</p>
 </div>
 
 <div class="atlas-section">
   <div class="atlas-container">
     <div class="atlas-loading" id="loading">Loading atlas data&hellip;</div>
-    <div class="atlas-controls" id="controls" style="display:none;">
+    <div class="atlas-controls" id="atlas-controls" style="display:none;">
+      <select class="atlas-btn" id="atlas-select" onchange="changeAtlas(this.value)">
+        <option value="glasser">Glasser Atlas (HCP-MMP1.0)</option>
+        <option value="destrieux">Destrieux Atlas</option>
+        <option value="yeo7">Yeo 7 Networks</option>
+        <option value="yeo17">Yeo 17 Networks</option>
+      </select>
+    </div>
+    <div class="atlas-view-controls" id="view-controls" style="display:none;">
       <button class="atlas-btn active" id="btn-pial" onclick="showPial()">Folded (Pial)</button>
       <button class="atlas-btn" id="btn-infl" onclick="showInflated()">Inflated</button>
     </div>
@@ -143,9 +160,11 @@
   </div>
   <p class="atlas-info">Hover to see region names &middot; Click+drag to rotate &middot; Scroll to zoom</p>
   <div class="tags" aria-label="Atlas keywords" style="justify-content: center; margin-top: 1rem;">
-    <span class="tag">Glasser Atlas</span>
-    <span class="tag">HCP-MMP1.0</span>
+    <span class="tag">Brain Atlas</span>
     <span class="tag">Cortical Parcellation</span>
+    <span class="tag">Glasser Atlas</span>
+    <span class="tag">Destrieux Atlas</span>
+    <span class="tag">Yeo Networks</span>
     <span class="tag">fsaverage</span>
     <span class="tag green">Inflated Cortex</span>
     <span class="tag lavender">Pial Surface</span>
@@ -155,21 +174,21 @@
 
 <main>
   <section>
-    <h2>About this Atlas</h2>
+    <h2>About this Atlas Viewer</h2>
     <p>
-      This interactive visualisation shows the HCP-MMP1.0 cortical parcellation
-      (Glasser et al., 2016) mapped onto the left hemisphere of the fsaverage
-      template brain. The atlas divides the cortex into 180 distinct regions per
-      hemisphere based on multi-modal MRI data including cortical architecture,
-      function, connectivity, and topography.
+      This interactive visualisation shows multiple cortical parcellation atlases
+      mapped onto the left hemisphere of the fsaverage template brain. You can
+      select from several popular atlases using the dropdown menu.
     </p>
     <p>
-      The parcellation is based on the landmark publication by Glasser and
-      colleagues, <em>A multi-modal parcellation of human cerebral cortex</em>
-      published in <em>Nature</em> in 2016. This viewer is intended as a simple,
-      web-based way to explore the atlas interactively for teaching, background
-      reading, and general reference.
+      <strong>Available Atlases:</strong>
     </p>
+    <ul>
+      <li><strong>Glasser Atlas (HCP-MMP1.0):</strong> 180-region parcellation based on multi-modal MRI data (Glasser et al., 2016)</li>
+      <li><strong>Destrieux Atlas:</strong> Anatomically-based parcellation with 74 cortical regions (Destrieux et al., 2010)</li>
+      <li><strong>Yeo 7 Networks:</strong> Functional connectivity-based networks derived from resting-state fMRI (Yeo et al., 2011)</li>
+      <li><strong>Yeo 17 Networks:</strong> Finer-grained functional networks with 17 subdivisions (Yeo et al., 2011)</li>
+    </ul>
     <p>
       Toggle between the <strong>folded (pial)</strong> surface showing the brain's
       natural gyri and sulci, and the <strong>inflated</strong> surface which reveals
@@ -184,6 +203,8 @@
     </p>
     <p style="margin-top: 0.75rem;">
       <a href="https://doi.org/10.1038/nature18933" target="_blank">Glasser et al., 2016 (Nature)</a> &middot;
+      <a href="https://doi.org/10.1016/j.neuroimage.2010.06.010" target="_blank">Destrieux et al., 2010</a> &middot;
+      <a href="https://doi.org/10.1152/jn.00338.2011" target="_blank">Yeo et al., 2011</a> &middot;
       <a href="software.html">&larr; Back to Software</a>
     </p>
   </section>
@@ -197,22 +218,58 @@
 
 <script>
 let atlasData = null;
+let currentAtlas = 'glasser';
 let currentView = 'pial';
 
-fetch('atlas_data.json')
-  .then(r => r.json())
-  .then(data => {
-    atlasData = data;
-    // Rebuild hover names from indices
-    atlasData.fh = data.fni.map(i => data.fn[i]);
+function loadAtlas(atlasType) {
+  return fetch(`atlas_data_${atlasType}.json`)
+    .then(r => r.json())
+    .then(data => {
+      atlasData = data;
+      // Rebuild hover names from indices
+      atlasData.fh = data.fni.map(i => data.fn[i]);
+      return data;
+    });
+}
+
+function changeAtlas(atlasType) {
+  currentAtlas = atlasType;
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('atlas-plot').style.display = 'none';
+  
+  loadAtlas(atlasType).then(() => {
     buildPlot('pial');
-    document.getElementById('loading').classList.add('hidden');
-    document.getElementById('controls').style.display = 'flex';
-  })
-  .catch(err => {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('atlas-plot').style.display = 'block';
+    updateTitle();
+  }).catch(err => {
     document.getElementById('loading').textContent = 'Failed to load atlas data.';
     console.error(err);
   });
+}
+
+function updateTitle() {
+  // Update page title and description based on current atlas
+  const titleMap = {
+    'glasser': 'Interactive Glasser Atlas',
+    'destrieux': 'Interactive Destrieux Atlas', 
+    'yeo7': 'Interactive Yeo 7 Networks Atlas',
+    'yeo17': 'Interactive Yeo 17 Networks Atlas'
+  };
+  document.title = titleMap[currentAtlas] + ' — Dr Thomas B. Shaw';
+}
+
+// Initial load
+loadAtlas('glasser').then(() => {
+  buildPlot('pial');
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('atlas-controls').style.display = 'flex';
+  document.getElementById('view-controls').style.display = 'flex';
+  updateTitle();
+}).catch(err => {
+  document.getElementById('loading').textContent = 'Failed to load atlas data.';
+  console.error(err);
+});
 
 function buildPlot(view) {
   const d = atlasData;
