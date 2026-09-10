@@ -1,0 +1,173 @@
+{
+  "atlases": [
+    {
+      "key": "aparc_sub",
+      "name": "Aparc Sub",
+      "description": "aparc_sub atlas",
+      "citation": "Unknown",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "aparc_sub.json",
+      "available": true
+    },
+    {
+      "key": "aparc",
+      "name": "Desikan-Killiany Atlas",
+      "description": "Desikan-Killiany Atlas (2006)",
+      "citation": "Desikan et al., 2006",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "aparc.json",
+      "available": true
+    },
+    {
+      "key": "aparc.a2005s",
+      "name": "Destrieux 2005 Atlas",
+      "description": "Destrieux Atlas (2005)",
+      "citation": "Destrieux et al., 2010",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "aparc.a2005s.json",
+      "available": true
+    },
+    {
+      "key": "aparc.a2009s",
+      "name": "Destrieux Atlas",
+      "description": "Destrieux Atlas (2009)",
+      "citation": "Destrieux et al., 2010",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "aparc.a2009s.json",
+      "available": true
+    },
+    {
+      "key": "HCPMMP1_combined",
+      "name": "Glasser Atlas (Combined, 23 regions)",
+      "description": "HCP-MMP1.0 Parcellation, combined/reduced set",
+      "citation": "Glasser et al., 2016",
+      "license_note": "Acknowledge the use of WU-Minn HCP data and data derived from WU-Minn HCP data when publicly presenting results.",
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "HCPMMP1_combined.json",
+      "available": true
+    },
+    {
+      "key": "HCPMMP1",
+      "name": "Glasser Atlas (HCP-MMP1.0)",
+      "description": "HCP-MMP1.0 Parcellation",
+      "citation": "Glasser et al., 2016",
+      "license_note": "Acknowledge the use of WU-Minn HCP data and data derived from WU-Minn HCP data when publicly presenting results.",
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "HCPMMP1.json",
+      "available": true
+    },
+    {
+      "key": "harvard_oxford_cort",
+      "name": "Harvard-Oxford Cortical Atlas - projected",
+      "description": "Probabilistic cortical atlas, max-probability thresholded",
+      "citation": "Makris et al., 2006",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [
+        "volumetric"
+      ],
+      "data_file": "harvard_oxford_cort.json",
+      "available": true
+    },
+    {
+      "key": "oasis.chubs",
+      "name": "OASIS CHUBS Atlas",
+      "description": "OASIS CHUBS Parcellation",
+      "citation": "OASIS",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "oasis.chubs.json",
+      "available": true
+    },
+    {
+      "key": "PALS_B12_Brodmann",
+      "name": "PALS Brodmann Atlas",
+      "description": "PALS Brodmann Areas",
+      "citation": "Van Essen, 2005",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "PALS_B12_Brodmann.json",
+      "available": true
+    },
+    {
+      "key": "PALS_B12_Lobes",
+      "name": "PALS Lobe Atlas",
+      "description": "PALS Lobe Parcellation",
+      "citation": "Van Essen, 2005",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "PALS_B12_Lobes.json",
+      "available": true
+    },
+    {
+      "key": "PALS_B12_OrbitoFrontal",
+      "name": "Pals B12 Orbitofrontal",
+      "description": "PALS_B12_OrbitoFrontal atlas",
+      "citation": "Unknown",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "PALS_B12_OrbitoFrontal.json",
+      "available": true
+    },
+    {
+      "key": "PALS_B12_Visuotopic",
+      "name": "Pals B12 Visuotopic",
+      "description": "PALS_B12_Visuotopic atlas",
+      "citation": "Unknown",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "PALS_B12_Visuotopic.json",
+      "available": true
+    },
+    {
+      "key": "schaefer_2018",
+      "name": "Schaefer 2018 Atlas - projected",
+      "description": "Deterministic Schaefer 2018 parcellation, 400 regions, 7 networks",
+      "citation": "Alexander Schaefer, Ru Kong, Evan M Gordon, Timothy O Laumann, Xi-Nian Zuo, Avram J Holmes, Simon B Eickhoff, and B T Thomas Yeo. Local-Global Parcellation of the Human Cerebral Cortex from Intrinsic Functional Connectivity MRI. Cerebral Cortex, 28(9):3095-3114, 07 2017. doi:10.1093/cercor/bhx179.",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [
+        "volumetric"
+      ],
+      "data_file": "schaefer_2018.json",
+      "available": true
+    },
+    {
+      "key": "Yeo2011_17Networks",
+      "name": "Yeo 17 Networks",
+      "description": "Yeo 17 Resting-State Networks",
+      "citation": "Yeo et al., 2011",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "Yeo2011_17Networks.json",
+      "available": true
+    },
+    {
+      "key": "Yeo2011_7Networks",
+      "name": "Yeo 7 Networks",
+      "description": "Yeo 7 Resting-State Networks",
+      "citation": "Yeo et al., 2011",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "Yeo2011_7Networks.json",
+      "available": true
+    }
+  ]
+}

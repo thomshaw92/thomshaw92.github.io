@@ -147,10 +147,7 @@
     <div class="atlas-loading" id="loading">Loading atlas data&hellip;</div>
     <div class="atlas-controls" id="atlas-controls" style="display:none;">
       <select class="atlas-btn" id="atlas-select" onchange="changeAtlas(this.value)">
-        <option value="glasser">Glasser Atlas (HCP-MMP1.0)</option>
-        <option value="destrieux">Destrieux Atlas</option>
-        <option value="yeo7">Yeo 7 Networks</option>
-        <option value="yeo17">Yeo 17 Networks</option>
+        <!-- options populated at runtime from atlas_registry.json -->
       </select>
     </div>
     <div class="atlas-view-controls" id="view-controls" style="display:none;">
@@ -160,6 +157,7 @@
     <div id="atlas-plot"></div>
   </div>
   <p class="atlas-info">Hover to see region names &middot; Click+drag to rotate &middot; Scroll to zoom</p>
+  <p class="atlas-info" id="atlas-citation-info"></p>
   <div class="tags" aria-label="Atlas keywords" style="justify-content: center; margin-top: 1rem;">
     <span class="tag">Brain Atlas</span>
     <span class="tag">Cortical Parcellation</span>
@@ -234,34 +232,39 @@
 </footer>
 
 <script>
+const ATLAS_DATA_BASE = './scripts/atlas_viewer/atlas_data';
+
 let atlasData = null;
-let atlasRegistry = {};
-let currentAtlas = 'HCPMMP1';  // Default to Glasser
+let atlasRegistry = [];
+let currentAtlas = 'HCPMMP1';
 let currentView = 'pial';
 
 function loadAtlasRegistry() {
-  return fetch('atlas_registry.json')
+  return fetch(`${ATLAS_DATA_BASE}/atlas_registry.json`)
     .then(r => r.json())
     .then(registry => {
-      atlasRegistry = registry;
-      return registry;
+      // Only offer atlases that have actually been built, so the
+      // dropdown never points at a missing file.
+      atlasRegistry = (registry.atlases || []).filter(a => a.available);
+      return atlasRegistry;
     });
+}
+
+function findAtlasEntry(key) {
+  return atlasRegistry.find(a => a.key === key);
 }
 
 function populateAtlasDropdown() {
   const select = document.getElementById('atlas-select');
   select.innerHTML = '';
-  
-  // Sort atlases by name for better UX
-  const sortedKeys = Object.keys(atlasRegistry).sort((a, b) => 
-    atlasRegistry[a].name.localeCompare(atlasRegistry[b].name)
-  );
-  
-  sortedKeys.forEach(key => {
+
+  const sorted = [...atlasRegistry].sort((a, b) => a.name.localeCompare(b.name));
+
+  sorted.forEach(entry => {
     const option = document.createElement('option');
-    option.value = key;
-    option.textContent = atlasRegistry[key].name;
-    if (key === currentAtlas) {
+    option.value = entry.key;
+    option.textContent = entry.name;
+    if (entry.key === currentAtlas) {
       option.selected = true;
     }
     select.appendChild(option);
@@ -269,7 +272,11 @@ function populateAtlasDropdown() {
 }
 
 function loadAtlas(atlasKey) {
-  return fetch(`atlas_data_${atlasKey}.json`)
+  const entry = findAtlasEntry(atlasKey);
+  if (!entry) {
+    return Promise.reject(new Error(`Atlas '${atlasKey}' not found in registry`));
+  }
+  return fetch(`${ATLAS_DATA_BASE}/${entry.data_file}`)
     .then(r => r.json())
     .then(data => {
       atlasData = data;
@@ -283,12 +290,13 @@ function changeAtlas(atlasKey) {
   currentAtlas = atlasKey;
   document.getElementById('loading').style.display = 'flex';
   document.getElementById('atlas-plot').style.display = 'none';
-  
+
   loadAtlas(atlasKey).then(() => {
     buildPlot('pial');
     document.getElementById('loading').style.display = 'none';
     document.getElementById('atlas-plot').style.display = 'block';
     updateTitle();
+    updateAtlasInfo();
   }).catch(err => {
     document.getElementById('loading').textContent = 'Failed to load atlas data.';
     console.error(err);
@@ -296,14 +304,24 @@ function changeAtlas(atlasKey) {
 }
 
 function updateTitle() {
-  const atlasInfo = atlasRegistry[currentAtlas];
-  if (atlasInfo) {
-    document.title = `${atlasInfo.name} - Interactive Brain Atlas — Dr Thomas B. Shaw`;
+  const entry = findAtlasEntry(currentAtlas);
+  if (entry) {
+    document.title = `${entry.name} - Interactive Brain Atlas — Dr Thomas B. Shaw`;
   }
+}
+
+function updateAtlasInfo() {
+  const entry = findAtlasEntry(currentAtlas);
+  const infoEl = document.getElementById('atlas-citation-info');
+  if (!entry || !infoEl) return;
+  infoEl.textContent = [entry.citation, entry.license_note].filter(Boolean).join(' — ');
 }
 
 // Initial load
 loadAtlasRegistry().then(() => {
+  if (!findAtlasEntry(currentAtlas) && atlasRegistry.length > 0) {
+    currentAtlas = atlasRegistry[0].key;
+  }
   populateAtlasDropdown();
   return loadAtlas(currentAtlas);
 }).then(() => {
@@ -312,6 +330,7 @@ loadAtlasRegistry().then(() => {
   document.getElementById('atlas-controls').style.display = 'flex';
   document.getElementById('view-controls').style.display = 'flex';
   updateTitle();
+  updateAtlasInfo();
 }).catch(err => {
   document.getElementById('loading').textContent = 'Failed to load atlas data.';
   console.error(err);
