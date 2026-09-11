@@ -103,12 +103,30 @@ def _add_boundary_lines(vertices, boundary_edges, target_list):
 
 def _generate_categorical_ctab(n_regions):
     """Fallback colour table for atlases with no ctab (e.g. most
-    volumetric nilearn atlases)."""
-    import matplotlib.pyplot as plt
-    cmap = plt.get_cmap("tab20", max(n_regions, 1))
+    volumetric nilearn atlases).
+
+    Uses HSV with a golden-angle hue step rather than cycling a fixed
+    20-colour palette: tab20 (or any small qualitative colormap) repeats
+    every 20 regions, so region 21 gets the same colour as region 1 -
+    fine for Desikan-Killiany (~36 regions) but actively misleading for
+    atlases with hundreds of regions (Schaefer-400, HCP-MMP1's 180).
+    The golden angle (~137.5 deg) spaces hues so consecutive regions
+    never land near each other in hue, and saturation/value are varied
+    across passes around the hue wheel so even same-hue regions from
+    different passes are still visually distinct.
+    """
+    import colorsys
+
+    golden_angle = 0.6180339887498949  # 1/phi, in units of a full hue turn
     ctab = np.zeros((n_regions, 4), dtype=np.int32)
     for i in range(n_regions):
-        r, g, b, _ = cmap(i % 20)
+        hue = (i * golden_angle) % 1.0
+        # Vary saturation/value slowly so colours from later "wraps"
+        # around the hue wheel are still distinguishable from earlier
+        # ones at a similar hue.
+        sat = 0.55 + 0.35 * (((i * 0.37) % 1.0))
+        val = 0.75 + 0.2 * (((i * 0.53) % 1.0))
+        r, g, b = colorsys.hsv_to_rgb(hue, sat, val)
         ctab[i] = [int(r * 255), int(g * 255), int(b * 255), 255]
     return ctab
 
@@ -162,13 +180,16 @@ def build_atlas_json(atlas_source: AtlasSource, surf_dir=None):
     if ctab is None:
         ctab = _generate_categorical_ctab(n_regions)
 
-    colorscale = []
-    for i in range(n_regions):
-        r, g, b = ctab[i, 0] / 255.0, ctab[i, 1] / 255.0, ctab[i, 2] / 255.0
-        val = i / max(n_regions - 1, 1)
-        colorscale.append([val, f"rgb({int(r*255)},{int(g*255)},{int(b*255)})"])
-
-    face_intensity = face_labels.astype(np.float64) / max(n_regions - 1, 1)
+    # Per-face explicit RGB colour strings, rather than an
+    # intensity+colorscale pair. plotly.js's colorscale interpolation
+    # breaks for colorscales with >=256 stops ("map requires nshades to
+    # be at least size N" - see plotly/plotly.js#3699), which atlases
+    # with hundreds of regions (e.g. Schaefer-400) blow straight past.
+    # facecolor sidesteps that entirely: no interpolation, just direct
+    # per-face colour lookup, and it works the same regardless of how
+    # many regions an atlas has.
+    face_rgb = ctab[np.clip(face_labels, 0, len(ctab) - 1), :3]
+    face_colors = [f"rgb({r},{g},{b})" for r, g, b in face_rgb.tolist()]
 
     print("Finding boundary edges...")
     boundary = _find_boundary_edges(lh_pial_f, face_labels)
@@ -183,8 +204,7 @@ def build_atlas_json(atlas_source: AtlasSource, surf_dir=None):
         "pv": [lh_pial_v[:, 0].tolist(), lh_pial_v[:, 1].tolist(), lh_pial_v[:, 2].tolist()],
         "iv": [lh_infl_v[:, 0].tolist(), lh_infl_v[:, 1].tolist(), lh_infl_v[:, 2].tolist()],
         "f": [lh_pial_f[:, 0].tolist(), lh_pial_f[:, 1].tolist(), lh_pial_f[:, 2].tolist()],
-        "fi": face_intensity.tolist(),
-        "cs": colorscale,
+        "fc": face_colors,
         "fn": lh_names,
         "fni": face_labels.tolist(),
         "pb": [[], [], []],

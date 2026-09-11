@@ -9,12 +9,42 @@ atlas means adding a subclass in sources.py first, then one entry here.
 
 import glob
 import os
+from pathlib import Path
+import urllib.request
 
 from .core import AtlasSource, ensure_fsaverage_full
 from .sources import VolumetricAtlasSource, CustomURLAtlasSource
 
-# --- Bundled FreeSurfer .annot atlases (ship with mne.datasets.fetch_fsaverage) ---
+REMOTE_ATLAS_URL = (
+    "https://raw.githubusercontent.com/thomshaw92/"
+    "FingertipMappingMND/feature/bodymap-preprocessing/"
+    "bodymap_preprocessing/atlas.py"
+)
 
+
+def _download_remote_atlas_module():
+    """Download a missing top-level atlas.py module from one of our
+    other repos that carries fetchers for additional atlases.
+
+    This keeps the registry loader self-healing: the import hook can
+    be satisfied from the user workspace, or a tiny network fallback can
+    fetch the expected atlas.py file.
+    """
+    repo_root = Path(__file__).resolve().parent
+    local_atlas = repo_root / "atlas.py"
+    if local_atlas.exists():
+        return local_atlas
+
+    try:
+        with urllib.request.urlopen(REMOTE_ATLAS_URL, timeout=30) as response:
+            body = response.read()
+        local_atlas.write_bytes(body)
+    except Exception:
+        return None
+    return local_atlas
+
+
+# Bundled FreeSurfer .annot atlases (ship with mne.datasets.fetch_fsaverage)
 ATLAS_REGISTRY = {
     "aparc": AtlasSource(
         key="aparc", name="Desikan-Killiany Atlas",
@@ -86,10 +116,16 @@ ATLAS_REGISTRY = {
     ),
 }
 
-# --- Example volumetric (nilearn) atlas - add more the same way ---
+#Additional atlases from nilearn datasets, if available.
+from nilearn import datasets as nil_datasets
 try:
-    from nilearn import datasets as nil_datasets
+    import atlas
+except Exception:
+    got_atlas = _download_remote_atlas_module()
+    if got_atlas is not None:
+        import atlas
 
+if hasattr(nil_datasets, "fetch_atlas_harvard_oxford"):
     ATLAS_REGISTRY["harvard_oxford_cort"] = VolumetricAtlasSource(
         key="harvard_oxford_cort", name="Harvard-Oxford Cortical Atlas",
         description="Probabilistic cortical atlas, max-probability thresholded",
@@ -97,9 +133,10 @@ try:
         fetch_fn=nil_datasets.fetch_atlas_harvard_oxford,
         fetch_kwargs={"atlas_name": "cort-maxprob-thr25-2mm"},
         tags=["volumetric"],
-        radius=5.0
+        radius=5.0,
     )
 
+if hasattr(nil_datasets, "fetch_atlas_schaefer_2018"):
     ATLAS_REGISTRY["schaefer_2018"] = VolumetricAtlasSource(
         key="schaefer_2018", name="Schaefer 2018 Atlas",
         description="Deterministic Schaefer 2018 parcellation, 400 regions, 7 networks",
@@ -107,10 +144,19 @@ try:
         fetch_fn=nil_datasets.fetch_atlas_schaefer_2018,
         fetch_kwargs={},
         tags=["volumetric"],
-        radius=5.0
+        radius=5.0,
     )
-except ImportError:
-    pass
+
+if hasattr(nil_datasets, "fetch_atlas_hmat_2006"):
+    ATLAS_REGISTRY["hmat_2006"] = VolumetricAtlasSource(
+        key="hmat_2006", name="HMAT 2006 Atlas",
+        description="Human Motor Area Template atlas with motor areas only in MNI152NLin6Asym space",
+        citation="Mayka, M.A., Corcos, D.M., Leurgans, S.E., Vaillancourt, D.E. 2006. Three-dimensional locations and boundaries of motor and premotor cortices as defined by functional brain imaging: a meta-analysis. Neuroimage. 31(4):1453-1474. doi: 10.1016/j.neuroimage.2006.02.004.",
+        fetch_fn=nil_datasets.fetch_atlas_hmat_2006,
+        fetch_kwargs={},
+        tags=["volumetric"],
+        radius=5.0,
+    )
 
 
 def discover_unregistered_atlases():
