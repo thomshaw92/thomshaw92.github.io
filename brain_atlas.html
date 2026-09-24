@@ -8,7 +8,7 @@
   <meta name="keywords" content="brain atlas, cortical parcellation, Glasser atlas, HCP-MMP1.0, Destrieux atlas, Yeo networks, interactive brain atlas, fsaverage, inflated cortex, pial surface, neuroimaging, plotly brain atlas">
   <meta name="author" content="Dr Thomas B. Shaw">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://thomshaw92.github.io/glasser_atlas.html">
+  <link rel="canonical" href="https://thomshaw92.github.io/brain_atlas.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Interactive Brain Atlas | Dr Thomas B. Shaw">
   <meta property="og:description" content="Explore multiple cortical parcellations on fsaverage with interactive folded and inflated left-hemisphere views.">
@@ -26,13 +26,15 @@
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "Interactive Glasser Atlas",
-      "url": "https://thomshaw92.github.io/glasser_atlas.html",
-      "description": "Interactive viewer of the HCP-MMP1.0 cortical parcellation on fsaverage left hemisphere surfaces.",
+      "name": "Interactive Brain Atlas",
+      "url": "https://thomshaw92.github.io/brain_atlas.html",
+      "description": "Interactive viewer of multiple cortical parcellation atlases on fsaverage left hemisphere surfaces.",
       "about": [
-        "Glasser atlas",
-        "HCP-MMP1.0",
+        "brain atlas",
         "cortical parcellation",
+        "Glasser atlas",
+        "Destrieux atlas",
+        "Yeo networks",
         "fsaverage",
         "neuroimaging"
       ],
@@ -128,7 +130,6 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="publications.html">Publications</a></li>
-      <li><a href="presentations.html">Presentations</a></li>
       <li><a href="grants.html">Grants</a></li>
       <li><a href="software.html" class="active">Software</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -146,10 +147,7 @@
     <div class="atlas-loading" id="loading">Loading atlas data&hellip;</div>
     <div class="atlas-controls" id="atlas-controls" style="display:none;">
       <select class="atlas-btn" id="atlas-select" onchange="changeAtlas(this.value)">
-        <option value="glasser">Glasser Atlas (HCP-MMP1.0)</option>
-        <option value="destrieux">Destrieux Atlas</option>
-        <option value="yeo7">Yeo 7 Networks</option>
-        <option value="yeo17">Yeo 17 Networks</option>
+        <!-- options populated at runtime from atlas_registry.json -->
       </select>
     </div>
     <div class="atlas-view-controls" id="view-controls" style="display:none;">
@@ -159,12 +157,16 @@
     <div id="atlas-plot"></div>
   </div>
   <p class="atlas-info">Hover to see region names &middot; Click+drag to rotate &middot; Scroll to zoom</p>
+  <p class="atlas-info" id="atlas-citation-info"></p>
   <div class="tags" aria-label="Atlas keywords" style="justify-content: center; margin-top: 1rem;">
     <span class="tag">Brain Atlas</span>
     <span class="tag">Cortical Parcellation</span>
+    <span class="tag">MNE Atlases</span>
+    <span class="tag">FreeSurfer</span>
     <span class="tag">Glasser Atlas</span>
     <span class="tag">Destrieux Atlas</span>
     <span class="tag">Yeo Networks</span>
+    <span class="tag">PALS Atlas</span>
     <span class="tag">fsaverage</span>
     <span class="tag green">Inflated Cortex</span>
     <span class="tag lavender">Pial Surface</span>
@@ -177,18 +179,28 @@
     <h2>About this Atlas Viewer</h2>
     <p>
       This interactive visualisation shows multiple cortical parcellation atlases
-      mapped onto the left hemisphere of the fsaverage template brain. You can
-      select from several popular atlases using the dropdown menu.
+      mapped onto the left hemisphere of the fsaverage template brain. The atlas
+      selection dropdown allows you to explore different parcellation schemes
+      available through MNE-Python and FreeSurfer.
     </p>
     <p>
-      <strong>Available Atlases:</strong>
+      <strong>Available Atlases:</strong> The viewer includes all standard atlases
+      available in the MNE-Python distribution, including:
     </p>
     <ul>
       <li><strong>Glasser Atlas (HCP-MMP1.0):</strong> 180-region parcellation based on multi-modal MRI data (Glasser et al., 2016)</li>
-      <li><strong>Destrieux Atlas:</strong> Anatomically-based parcellation with 74 cortical regions (Destrieux et al., 2010)</li>
-      <li><strong>Yeo 7 Networks:</strong> Functional connectivity-based networks derived from resting-state fMRI (Yeo et al., 2011)</li>
-      <li><strong>Yeo 17 Networks:</strong> Finer-grained functional networks with 17 subdivisions (Yeo et al., 2011)</li>
+      <li><strong>Destrieux Atlases:</strong> Anatomically-based parcellations with 74-82 cortical regions (Destrieux et al., 2010)</li>
+      <li><strong>Desikan-Killiany Atlas:</strong> 36-region anatomical parcellation (Desikan et al., 2006)</li>
+      <li><strong>Yeo Networks:</strong> Functional connectivity-based networks (7 or 17 networks) derived from resting-state fMRI (Yeo et al., 2011)</li>
+      <li><strong>PALS Atlases:</strong> Various PALS parcellations including Brodmann areas and lobe divisions (Van Essen, 2005)</li>
+      <li><strong>OASIS CHUBS:</strong> OASIS CHUBS parcellation</li>
+      <li><strong>And more...</strong> All atlases available in your MNE installation</li>
     </ul>
+    <p>
+      <strong>Custom Atlases:</strong> The build system also supports downloading and
+      processing custom atlas annotation files from URLs. Use the command-line
+      tool to add new atlases to the collection.
+    </p>
     <p>
       Toggle between the <strong>folded (pial)</strong> surface showing the brain's
       natural gyri and sulci, and the <strong>inflated</strong> surface which reveals
@@ -202,9 +214,12 @@
       commercial use.
     </p>
     <p style="margin-top: 0.75rem;">
-      <a href="https://doi.org/10.1038/nature18933" target="_blank">Glasser et al., 2016 (Nature)</a> &middot;
-      <a href="https://doi.org/10.1016/j.neuroimage.2010.06.010" target="_blank">Destrieux et al., 2010</a> &middot;
-      <a href="https://doi.org/10.1152/jn.00338.2011" target="_blank">Yeo et al., 2011</a> &middot;
+      <strong>References:</strong><br>
+      Glasser et al., 2016 (Nature) &middot;
+      Destrieux et al., 2010 &middot;
+      Desikan et al., 2006 &middot;
+      Yeo et al., 2011 &middot;
+      Van Essen, 2005<br>
       <a href="software.html">&larr; Back to Software</a>
     </p>
   </section>
@@ -217,12 +232,51 @@
 </footer>
 
 <script>
+const ATLAS_DATA_BASE = './scripts/atlas_viewer/atlas_data';
+
 let atlasData = null;
-let currentAtlas = 'glasser';
+let atlasRegistry = [];
+let currentAtlas = 'HCPMMP1';
 let currentView = 'pial';
 
-function loadAtlas(atlasType) {
-  return fetch(`atlas_data_${atlasType}.json`)
+function loadAtlasRegistry() {
+  return fetch(`${ATLAS_DATA_BASE}/atlas_registry.json`)
+    .then(r => r.json())
+    .then(registry => {
+      // Only offer atlases that have actually been built, so the
+      // dropdown never points at a missing file.
+      atlasRegistry = (registry.atlases || []).filter(a => a.available);
+      return atlasRegistry;
+    });
+}
+
+function findAtlasEntry(key) {
+  return atlasRegistry.find(a => a.key === key);
+}
+
+function populateAtlasDropdown() {
+  const select = document.getElementById('atlas-select');
+  select.innerHTML = '';
+
+  const sorted = [...atlasRegistry].sort((a, b) => a.name.localeCompare(b.name));
+
+  sorted.forEach(entry => {
+    const option = document.createElement('option');
+    option.value = entry.key;
+    option.textContent = entry.name;
+    if (entry.key === currentAtlas) {
+      option.selected = true;
+    }
+    select.appendChild(option);
+  });
+}
+
+function loadAtlas(atlasKey) {
+  const entry = findAtlasEntry(atlasKey);
+  if (!entry) {
+    return Promise.reject(new Error(`Atlas '${atlasKey}' not found in registry`));
+  }
+  return fetch(`${ATLAS_DATA_BASE}/${entry.data_file}`)
     .then(r => r.json())
     .then(data => {
       atlasData = data;
@@ -232,16 +286,17 @@ function loadAtlas(atlasType) {
     });
 }
 
-function changeAtlas(atlasType) {
-  currentAtlas = atlasType;
+function changeAtlas(atlasKey) {
+  currentAtlas = atlasKey;
   document.getElementById('loading').style.display = 'flex';
   document.getElementById('atlas-plot').style.display = 'none';
-  
-  loadAtlas(atlasType).then(() => {
+
+  loadAtlas(atlasKey).then(() => {
     buildPlot('pial');
     document.getElementById('loading').style.display = 'none';
     document.getElementById('atlas-plot').style.display = 'block';
     updateTitle();
+    updateAtlasInfo();
   }).catch(err => {
     document.getElementById('loading').textContent = 'Failed to load atlas data.';
     console.error(err);
@@ -249,23 +304,33 @@ function changeAtlas(atlasType) {
 }
 
 function updateTitle() {
-  // Update page title and description based on current atlas
-  const titleMap = {
-    'glasser': 'Interactive Glasser Atlas',
-    'destrieux': 'Interactive Destrieux Atlas', 
-    'yeo7': 'Interactive Yeo 7 Networks Atlas',
-    'yeo17': 'Interactive Yeo 17 Networks Atlas'
-  };
-  document.title = titleMap[currentAtlas] + ' — Dr Thomas B. Shaw';
+  const entry = findAtlasEntry(currentAtlas);
+  if (entry) {
+    document.title = `${entry.name} - Interactive Brain Atlas — Dr Thomas B. Shaw`;
+  }
+}
+
+function updateAtlasInfo() {
+  const entry = findAtlasEntry(currentAtlas);
+  const infoEl = document.getElementById('atlas-citation-info');
+  if (!entry || !infoEl) return;
+  infoEl.textContent = [entry.citation, entry.license_note].filter(Boolean).join(' — ');
 }
 
 // Initial load
-loadAtlas('glasser').then(() => {
+loadAtlasRegistry().then(() => {
+  if (!findAtlasEntry(currentAtlas) && atlasRegistry.length > 0) {
+    currentAtlas = atlasRegistry[0].key;
+  }
+  populateAtlasDropdown();
+  return loadAtlas(currentAtlas);
+}).then(() => {
   buildPlot('pial');
   document.getElementById('loading').classList.add('hidden');
   document.getElementById('atlas-controls').style.display = 'flex';
   document.getElementById('view-controls').style.display = 'flex';
   updateTitle();
+  updateAtlasInfo();
 }).catch(err => {
   document.getElementById('loading').textContent = 'Failed to load atlas data.';
   console.error(err);
@@ -281,10 +346,7 @@ function buildPlot(view) {
     type: 'mesh3d',
     x: verts[0], y: verts[1], z: verts[2],
     i: d.f[0], j: d.f[1], k: d.f[2],
-    intensity: d.fi,
-    intensitymode: 'cell',
-    colorscale: d.cs,
-    showscale: false,
+    facecolor: d.fc,
     text: d.fh,
     hovertemplate: '%{text}<extra></extra>',
     flatshading: false,
