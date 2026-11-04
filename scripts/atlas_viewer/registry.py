@@ -17,7 +17,7 @@ from .sources import VolumetricAtlasSource, CustomURLAtlasSource
 
 REMOTE_ATLAS_URL = (
     "https://raw.githubusercontent.com/thomshaw92/"
-    "FingertipMappingMND/feature/bodymap-preprocessing/"
+    "FingertipMappingMND/main/"
     "bodymap_preprocessing/atlas.py"
 )
 
