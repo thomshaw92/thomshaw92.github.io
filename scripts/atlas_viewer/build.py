@@ -131,6 +131,20 @@ def _generate_categorical_ctab(n_regions):
     return ctab
 
 
+def _lighten_ctab(ctab, low=0.4, high=0.9):
+    """Rescale each colour's HLS lightness from [0, 1] to [low, high],
+    keeping hue and saturation. HCP-MMP1's own colour table has many
+    near-black areas that vanish against the dark viewer background and
+    the black boundary lines."""
+    import colorsys
+
+    out = np.array(ctab, copy=True)
+    for row in out:
+        h, l, s = colorsys.rgb_to_hls(*(row[:3] / 255.0))
+        row[:3] = [round(c * 255) for c in colorsys.hls_to_rgb(h, low + (high - low) * l, s)]
+    return out
+
+
 def build_atlas_json(atlas_source: AtlasSource, surf_dir=None):
     """Run an AtlasSource end-to-end and return the JSON-ready dict.
 
@@ -179,6 +193,8 @@ def build_atlas_json(atlas_source: AtlasSource, surf_dir=None):
     ctab = vertex_labels.ctab
     if ctab is None:
         ctab = _generate_categorical_ctab(n_regions)
+    elif atlas_source.key == "HCPMMP1":
+        ctab = _lighten_ctab(ctab)
 
     # Per-face explicit RGB colour strings, rather than an
     # intensity+colorscale pair. plotly.js's colorscale interpolation

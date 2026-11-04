@@ -469,24 +469,40 @@ footer {
     width: 130px;
     height: 130px;
   }
-  .nav-links {
+  /* "nav .nav-links" so these beat the desktop rule above */
+  nav .nav-links {
     display: none;
     position: absolute;
     top: var(--nav-height);
     left: 0;
     right: 0;
-    background: var(--color-nav-bg);
+    background: var(--color-bg-card);
     flex-direction: column;
-    padding: 1rem 1.5rem;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.25rem 1.5rem 0.75rem;
     border-bottom: 1px solid var(--color-border);
-    gap: 0.5rem;
+    box-shadow: var(--shadow-md);
   }
-  .nav-links.open {
+  nav .nav-links.open {
     display: flex;
+  }
+  nav .nav-links a {
+    display: block;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    border-bottom: none;
+  }
+  nav .nav-links a.active {
+    font-weight: 600;
   }
   .nav-toggle {
     display: block;
   }
+  /* Hamburger becomes an X while the menu is open */
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   .grant-item {
     grid-template-columns: 1fr;
     gap: 0.5rem;

@@ -52,6 +52,12 @@ ATLAS_REGISTRY = {
         citation="Desikan et al., 2006",
         annot_filename="lh.aparc.annot",
     ),
+    "aparc_sub": AtlasSource(
+        key="aparc_sub", name="Desikan-Killiany Subdivided Atlas",
+        description="Desikan-Killiany Atlas subdivided into 225 left-hemisphere regions",
+        citation="Khan et al., 2018",
+        annot_filename="lh.aparc_sub.annot",
+    ),
     "aparc.a2009s": AtlasSource(
         key="aparc.a2009s", name="Destrieux Atlas",
         description="Destrieux Atlas (2009)",

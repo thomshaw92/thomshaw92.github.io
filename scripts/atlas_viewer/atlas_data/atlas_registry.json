@@ -1,17 +1,6 @@
 {
   "atlases": [
     {
-      "key": "aparc_sub",
-      "name": "Aparc Sub",
-      "description": "aparc_sub atlas",
-      "citation": "Unknown",
-      "license_note": null,
-      "resolution": "fsaverage6",
-      "tags": [],
-      "data_file": "aparc_sub.json",
-      "available": true
-    },
-    {
       "key": "aparc",
       "name": "Desikan-Killiany Atlas",
       "description": "Desikan-Killiany Atlas (2006)",
@@ -20,6 +9,17 @@
       "resolution": "fsaverage6",
       "tags": [],
       "data_file": "aparc.json",
+      "available": true
+    },
+    {
+      "key": "aparc_sub",
+      "name": "Desikan-Killiany Subdivided Atlas",
+      "description": "Desikan-Killiany Atlas subdivided into 225 left-hemisphere regions",
+      "citation": "Khan et al., 2018",
+      "license_note": null,
+      "resolution": "fsaverage6",
+      "tags": [],
+      "data_file": "aparc_sub.json",
       "available": true
     },
     {

@@ -117,6 +117,16 @@
       margin: 0 auto;
       padding: 0 1.5rem;
     }
+    /* Phones: dropdown below Plotly's toolbar, view buttons in a row along the bottom */
+    @media (max-width: 768px) {
+      .atlas-section { padding: 0 1rem; }
+      .atlas-controls { top: 2.75rem; right: 1rem; }
+      .atlas-view-controls {
+        top: auto; bottom: 1rem; left: 1rem; transform: none;
+        flex-direction: row;
+      }
+      .atlas-view-controls .atlas-btn { flex: 1; }
+    }
   </style>
 </head>
 <body>
@@ -157,70 +167,30 @@
     </div>
     <div id="atlas-plot"></div>
   </div>
-  <p class="atlas-info">Hover to see region names &middot; Click+drag to rotate &middot; Scroll to zoom</p>
+  <p class="atlas-info">Hover or tap to see region names &middot; Drag to rotate &middot; Scroll or pinch to zoom</p>
   <p class="atlas-info" id="atlas-citation-info"></p>
-  <div class="tags" aria-label="Atlas keywords" style="justify-content: center; margin-top: 1rem;">
-    <span class="tag">Brain Atlas</span>
-    <span class="tag">Cortical Parcellation</span>
-    <span class="tag">MNE Atlases</span>
-    <span class="tag">FreeSurfer</span>
-    <span class="tag">Glasser Atlas</span>
-    <span class="tag">Destrieux Atlas</span>
-    <span class="tag">Yeo Networks</span>
-    <span class="tag">PALS Atlas</span>
-    <span class="tag">fsaverage</span>
-    <span class="tag green">Inflated Cortex</span>
-    <span class="tag lavender">Pial Surface</span>
-    <span class="tag peach">Neuroimaging</span>
-  </div>
 </div>
 
 <main>
   <section>
-    <h2>About this Atlas Viewer</h2>
+    <h2>About</h2>
     <p>
-      This interactive visualisation shows multiple cortical parcellation atlases
-      mapped onto the left hemisphere of the fsaverage template brain. The atlas
-      selection dropdown allows you to explore different parcellation schemes
-      available through MNE-Python and FreeSurfer.
-    </p>
-    <p>
-      <strong>Available Atlases:</strong> The viewer includes all standard atlases
-      available in the MNE-Python distribution, including:
+      Cortical atlases on the left hemisphere of the FreeSurfer fsaverage brain. Pick an atlas from the
+      menu and switch between the folded and inflated surface.
     </p>
     <ul>
-      <li><strong>Glasser Atlas (HCP-MMP1.0):</strong> 180-region parcellation based on multi-modal MRI data (Glasser et al., 2016)</li>
-      <li><strong>Destrieux Atlases:</strong> Anatomically-based parcellations with 74-82 cortical regions (Destrieux et al., 2010)</li>
-      <li><strong>Desikan-Killiany Atlas:</strong> 36-region anatomical parcellation (Desikan et al., 2006)</li>
-      <li><strong>Yeo Networks:</strong> Functional connectivity-based networks (7 or 17 networks) derived from resting-state fMRI (Yeo et al., 2011)</li>
-      <li><strong>PALS Atlases:</strong> Various PALS parcellations including Brodmann areas and lobe divisions (Van Essen, 2005)</li>
-      <li><strong>OASIS CHUBS:</strong> OASIS CHUBS parcellation</li>
-      <li><strong>Volume atlases projected onto the surface:</strong> Harvard-Oxford cortical, HMAT motor areas, and Schaefer 2018 (7 networks)</li>
+      <li><strong>Glasser (HCP-MMP1.0):</strong> 180 areas from multi-modal MRI (Glasser et al., 2016)</li>
+      <li><strong>Destrieux:</strong> 74 to 82 anatomical regions (Destrieux et al., 2010)</li>
+      <li><strong>Desikan-Killiany:</strong> 36 anatomical regions (Desikan et al., 2006), and a subdivided version with 225 (Khan et al., 2018)</li>
+      <li><strong>Yeo:</strong> 7 or 17 resting-state networks (Yeo et al., 2011)</li>
+      <li><strong>PALS:</strong> Brodmann areas, lobes, and others (Van Essen, 2005)</li>
+      <li><strong>OASIS CHUBS</strong></li>
+      <li><strong>Projected from volumes:</strong> Harvard-Oxford cortical, HMAT motor areas, and Schaefer 2018 (7 networks)</li>
     </ul>
-    <p>
-      <strong>Custom Atlases:</strong> The build system also supports downloading and
-      processing custom atlas annotation files from URLs. Use the command-line
-      tool to add new atlases to the collection.
-    </p>
-    <p>
-      Toggle between the <strong>folded (pial)</strong> surface showing the brain's
-      natural gyri and sulci, and the <strong>inflated</strong> surface which reveals
-      regions hidden within sulcal folds. Black boundary lines delineate each
-      parcellation region.
-    </p>
     <p style="background: var(--color-bg-alt); border-left: 4px solid var(--color-accent); padding: 0.9rem 1rem; border-radius: 0 8px 8px 0;">
-      <strong>Information only:</strong> this atlas viewer is provided for
-      informational, educational, and research demonstration purposes only. It
-      is not intended for clinical decision-making, diagnostic use, or
-      commercial use.
+      <strong>Information only:</strong> for teaching and research demonstration, not for clinical or commercial use.
     </p>
     <p style="margin-top: 0.75rem;">
-      <strong>References:</strong><br>
-      Glasser et al., 2016 (Nature) &middot;
-      Destrieux et al., 2010 &middot;
-      Desikan et al., 2006 &middot;
-      Yeo et al., 2011 &middot;
-      Van Essen, 2005<br>
       <a href="software.html">&larr; Back to Software</a>
     </p>
   </section>
@@ -301,9 +271,10 @@ function changeAtlas(atlasKey) {
 
   loadAtlas(atlasKey).then((current) => {
     if (!current) return;
-    buildPlot(currentView);
+    // Show the plot before drawing it; a hidden div makes Plotly fall back to 700 px wide.
     document.getElementById('loading').style.display = 'none';
     document.getElementById('atlas-plot').style.display = 'block';
+    buildPlot(currentView);
     updateTitle();
     updateAtlasInfo();
   }).catch(err => {
@@ -350,6 +321,10 @@ function buildPlot(view) {
   const isP = view === 'pial';
   const verts = isP ? d.pv : d.iv;
   const bnd = isP ? d.pb : d.ib;
+  // The 3D view fits the plot's height, so a tall narrow plot (a phone) crops
+  // the brain at the sides. Pull the camera back in proportion.
+  const el = document.getElementById('atlas-plot');
+  const zoom = el.clientWidth ? Math.max(1, 1.1 * el.clientHeight / el.clientWidth) : 1;
 
   const mesh = {
     type: 'mesh3d',
@@ -380,7 +355,7 @@ function buildPlot(view) {
       bgcolor: '#161629',
       aspectmode: 'data',
       camera: {
-        eye: {x: -1.7, y: -0.5, z: 0.3},
+        eye: {x: -1.7 * zoom, y: -0.5 * zoom, z: 0.3 * zoom},
         up: {x: 0, y: 0, z: 1}
       }
     },
@@ -395,6 +370,7 @@ function buildPlot(view) {
     modeBarButtonsToRemove: ['lasso2d', 'select2d'],
     displaylogo: false,
     scrollZoom: true,
+    responsive: true,
   };
 
   Plotly.newPlot('atlas-plot', [mesh, lines], layout, config);
