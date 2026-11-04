@@ -126,5 +126,4 @@ python build_atlas.py custom \
 
 ## License
 
-This atlas viewer is provided for informational, educational, and research purposes only. Not intended for clinical use.</content>
-<parameter name="filePath">/home/uqmtoth/repos/thomshaw92.github.io/ATLAS_README.md
+This atlas viewer is provided for informational, educational, and research purposes only. Not intended for clinical use.

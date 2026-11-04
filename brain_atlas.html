@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Interactive Brain Atlas | Dr Thomas B. Shaw">
   <meta property="og:description" content="Explore multiple cortical parcellations on fsaverage with interactive folded and inflated left-hemisphere views.">
-  <meta property="og:url" content="https://thomshaw92.github.io/glasser_atlas.html">
+  <meta property="og:url" content="https://thomshaw92.github.io/brain_atlas.html">
   <meta property="og:image" content="https://thomshaw92.github.io/images/Thomas_Shaw_2025_cropped.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Interactive Brain Atlas | Dr Thomas B. Shaw">
@@ -130,6 +130,7 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="publications.html">Publications</a></li>
+      <li><a href="presentations.html">Presentations</a></li>
       <li><a href="grants.html">Grants</a></li>
       <li><a href="software.html" class="active">Software</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -194,7 +195,7 @@
       <li><strong>Yeo Networks:</strong> Functional connectivity-based networks (7 or 17 networks) derived from resting-state fMRI (Yeo et al., 2011)</li>
       <li><strong>PALS Atlases:</strong> Various PALS parcellations including Brodmann areas and lobe divisions (Van Essen, 2005)</li>
       <li><strong>OASIS CHUBS:</strong> OASIS CHUBS parcellation</li>
-      <li><strong>And more...</strong> All atlases available in your MNE installation</li>
+      <li><strong>Volume atlases projected onto the surface:</strong> Harvard-Oxford cortical, HMAT motor areas, and Schaefer 2018 (7 networks)</li>
     </ul>
     <p>
       <strong>Custom Atlases:</strong> The build system also supports downloading and
@@ -279,20 +280,28 @@ function loadAtlas(atlasKey) {
   return fetch(`${ATLAS_DATA_BASE}/${entry.data_file}`)
     .then(r => r.json())
     .then(data => {
+      // A newer selection started while this one downloaded; drop this one.
+      if (atlasKey !== currentAtlas) return false;
+      // Unlabelled faces (medial wall, background, unknown) are grey, not a
+      // region colour, so mostly-unlabelled atlases do not look broken.
+      const unlabelled = (n) => /^(|unknown|\?\?\?|background|medial[ ._]?wall)$/i.test(n || '');
+      data.fc = data.fc.map((c, k) => unlabelled(data.fn[data.fni[k]]) ? 'rgb(170,170,170)' : c);
+      data.fh = data.fni.map(i => data.fn[i] || 'Unlabelled');
       atlasData = data;
-      // Rebuild hover names from indices
-      atlasData.fh = data.fni.map(i => data.fn[i]);
-      return data;
+      return true;
     });
 }
 
 function changeAtlas(atlasKey) {
   currentAtlas = atlasKey;
-  document.getElementById('loading').style.display = 'flex';
+  const loading = document.getElementById('loading');
+  loading.textContent = 'Loading atlas data…';
+  loading.style.display = 'flex';
   document.getElementById('atlas-plot').style.display = 'none';
 
-  loadAtlas(atlasKey).then(() => {
-    buildPlot('pial');
+  loadAtlas(atlasKey).then((current) => {
+    if (!current) return;
+    buildPlot(currentView);
     document.getElementById('loading').style.display = 'none';
     document.getElementById('atlas-plot').style.display = 'block';
     updateTitle();
